@@ -67,6 +67,10 @@ class KEmbedBuilder {
         embedBuilder.addField(field.name, field.value, field.inline)
     }
 
+    fun field(name: String, value: String, inline: Boolean) {
+        embedBuilder.addField(name, value, inline)
+    }
+
     fun blankField(inline: Boolean = false) {
         embedBuilder.addBlankField(inline)
     }
