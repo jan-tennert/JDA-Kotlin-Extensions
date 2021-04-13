@@ -1,4 +1,4 @@
-package de.jan.jdaktx
+package de.jan.jdaktx.CommandHandler
 
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.commands.CommandHook

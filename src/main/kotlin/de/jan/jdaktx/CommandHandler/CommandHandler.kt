@@ -1,20 +1,11 @@
-package de.jan.jdaktx
+package de.jan.jdaktx.CommandHandler
 
-import de.jan.jdaktx.KEmbeds.messageEmbed
+import de.jan.jdaktx.Utils.toFormattedString
 import net.dv8tion.jda.api.JDA
-import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.Permission
-import net.dv8tion.jda.api.commands.CommandHook
-import net.dv8tion.jda.api.entities.Member
-import net.dv8tion.jda.api.entities.PrivateChannel
-import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.restaction.CommandUpdateAction
-import java.awt.Color
-import java.time.LocalDate
-import java.util.*
 
 class CommandHandler(val jda: JDA) : ListenerAdapter() {
 
@@ -74,16 +65,4 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
         }
         println("[CommandHandler] Registered all commands!")
     }
-}
-
-fun <T>Collection<T>.toFormattedString(separator: String = ", ") : String {
-    var string = ""
-    for ((index, t) in this.withIndex()) {
-        if(index != this.size - 1) {
-            string += t.toString() + separator
-        } else {
-            string += t.toString()
-        }
-    }
-    return string
 }
