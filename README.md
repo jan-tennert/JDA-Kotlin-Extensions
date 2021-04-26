@@ -6,16 +6,16 @@ JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-S
 
 ```kotlin
 val jda = JDABuilder.createDefault("token").build()
-    val commandHandler = CommandHandler(jda)
+val commandHandler = CommandHandler(jda)
 
-    jda.awaitReady()
-    val test = testCommand()
-    //If it a guild only command you can do
-    test.guildID = 98318748314
-    commandHandler.registerCommands(test)
+jda.awaitReady()
+val test = testCommand()
+//If it a guild only command you can do
+test.guildID = 98318748314
+commandHandler.registerCommands(test)
 
-    class testCommand : Command("test", "This is a Test Command") {
-        override fun run(
+class testCommand : Command("test", "This is a Test Command") {
+      override fun run(
             channel: TextChannel?,
             member: Member?,
             user: User,
@@ -37,5 +37,5 @@ val jda = JDABuilder.createDefault("token").build()
             event.reply(embed).queue()
         }
 
-    }
+}
 ```
