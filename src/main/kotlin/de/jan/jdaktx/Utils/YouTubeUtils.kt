@@ -26,7 +26,18 @@ class YouTubeUtils(val apiKey: String) {
         return videos.toList()
     }
 
-    class Video(data: JSONObject) {
+    fun getVideoById(id: String): Video {
+        val url =
+            "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=${apiKey}"
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .build()
+        val result = JSONObject(okhttp.newCall(request).execute().body!!.string())
+        return Video(result.getJSONArray("items")[0] as JSONObject, id)
+    }
+
+    class Video(data: JSONObject, id: String? = null) {
 
         private val snippet = data.getJSONObject("snippet")
         val title = snippet.getString("title")
@@ -37,7 +48,7 @@ class YouTubeUtils(val apiKey: String) {
         val publishedAt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
             snippet.getString("publishedAt").replace("T", " ").replace("Z", "")
         )
-        val videoID = data.getJSONObject("id").getString("videoId")
+        val videoID = id ?: data.getJSONObject("id").getString("videoId")
 
     }
 
