@@ -1,4 +1,4 @@
-package de.jan.jdaktx.KEmbeds
+package de.jan.jdaktx.KClasses.KEmbeds
 
 class KEmbedField {
 

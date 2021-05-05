@@ -1,4 +1,4 @@
-package de.jan.jdaktx.KEmbeds
+package de.jan.jdaktx.KClasses.KEmbeds
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
