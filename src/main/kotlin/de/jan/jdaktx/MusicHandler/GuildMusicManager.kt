@@ -14,7 +14,7 @@ class GuildMusicManager(manager: AudioPlayerManager, val guild: Guild) {
         -0.1f, -0.1f, -0.1f, -0.1f
     )
 
-    private val scheduler = TrackScheduler(player, guild)
+    val scheduler = TrackScheduler(player, guild)
     var volume: Int = 100
         set(value) {
             field = value
