@@ -80,7 +80,6 @@
             <artifactId>okhttp</artifactId>
             <version>5.0.0-alpha.2</version>
         </dependency>
-
         <dependency>
             <groupId>com.sedmelluq</groupId>
             <artifactId>lavaplayer</artifactId>

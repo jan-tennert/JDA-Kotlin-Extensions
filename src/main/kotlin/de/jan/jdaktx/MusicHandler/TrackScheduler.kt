@@ -43,7 +43,7 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) 
                 val t = nextTrack.makeClone()
                 player.startTrack(t, false)
             } else {
-                guild.musicManager.stop()
+              //  guild.musicManager.stop()
             }
         }
     }
