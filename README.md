@@ -44,7 +44,7 @@ class testCommand : Command("test", "This is a Test Command") {
 
 ### Create roles & guild channels in custom event manager
 
-```java
+```kotlin
 
 val manager = KEventManager()
 val jda = JDABuilder.createDefault("token")
