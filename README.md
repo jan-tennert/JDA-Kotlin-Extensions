@@ -4,6 +4,8 @@ JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-S
 
 # Example:
 
+### Slash Commands
+
 ```kotlin
 val jda = JDABuilder.createDefault("token").build()
 val commandHandler = CommandHandler(jda)
@@ -39,3 +41,45 @@ class testCommand : Command("test", "This is a Test Command") {
 
 }
 ```
+
+### Create roles & guild channels in custom event manager
+
+```java
+
+val manager = KEventManager()
+val jda = JDABuilder.createDefault("token")
+      .setEventManager(manager)
+      .build()
+
+manager.on<GuildMessageReceivedEvent>() {
+     it.channel.sendMessage("Received Message!").queue()
+        
+     //Create channel:
+        
+     it.guild.createTextChannel("test") {
+            
+        slowMode = 20
+        topic = "Very cool text channel!"
+            
+        addMemberPermission(523405005402) {
+             + Permission.MESSAGE_READ //allow permission
+             - Permission.MESSAGE_WRITE //deny permission
+        }
+            
+    }
+        
+     //Create role:
+        
+     it.guild.createRole { 
+            
+         name = "role"
+         color = Color.CYAN
+         mentionable = false
+            
+         permissions {  //Add permissions to the role
+             + Permission.KICK_MEMBERS
+             + Permission.BAN_MEMBERS
+         }
+            
+     }
+}
