@@ -1,6 +1,6 @@
 package de.jan.jdaktx.KClasses.KRoles
 
-import net.dv8tion.jda.api.Permission
+import de.jan.jdaktx.KClasses.Permissions
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.requests.restaction.RoleAction
 import java.awt.Color
@@ -29,17 +29,13 @@ class KRole(guild: Guild) {
             roleAction.setHoisted(field)
         }
 
-    fun setPermissions(vararg permissions: Permission) {
-        roleAction.setPermissions(permissions.toList())
+    fun permissions(init: Permissions.() -> Unit): Permissions {
+        val permissions = Permissions()
+        permissions.init()
+        roleAction.setPermissions(permissions.allow)
+        return permissions
     }
 
-    fun setPermissions(permissions: Long?) {
-        roleAction.setPermissions(permissions)
-    }
-
-    fun setPermissions(permissions: Collection<Permission>) {
-        roleAction.setPermissions(permissions)
-    }
 }
 
 fun Guild.createRole(init: KRole.() -> Unit): RoleAction {
@@ -47,5 +43,3 @@ fun Guild.createRole(init: KRole.() -> Unit): RoleAction {
     role.init()
     return role.roleAction
 }
-
-

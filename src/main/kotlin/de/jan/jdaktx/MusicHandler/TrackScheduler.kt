@@ -20,7 +20,6 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) 
 
     fun queue(track: AudioTrack) {
         if (player.startTrack(track, true)) {
-            println(queue.size)
         } else {
             queue.offer(track)
         }
@@ -39,7 +38,6 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) 
                 guild.musicManager.stop()
             }
         } else {
-            println(queue.size)
             val nextTrack = queue.poll()
             if (nextTrack != null) {
                 val t = nextTrack.makeClone()
