@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData
 
 class KSubCommandGroups {
 
-    val commands = mutableListOf<SubcommandGroupData>()
+    internal val commands = mutableListOf<SubcommandGroupData>()
 
     fun subCommandGroup(name: String = "", description: String = "", cmd: KSubCommandGroup.() -> Unit) {
         val subCommand = KSubCommandGroup(name, description)

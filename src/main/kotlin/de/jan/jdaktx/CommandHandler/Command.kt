@@ -88,11 +88,13 @@ class ImplementedCommand {
         }
     }
 
-    fun build(): Command {
+    internal fun build(): Command {
+        if (name.isBlank()) throw IllegalArgumentException("A command requires a name")
+        if (description.isBlank()) throw IllegalArgumentException("A command requires a description")
         return command
     }
 
-    private class KCommand : Command("---", "---") {
+    private class KCommand : Command("empty", "empty") {
 
         var action: ((SlashCommandEvent) -> Unit)? = null
 
@@ -112,9 +114,22 @@ class ImplementedCommand {
 
 }
 
-
 fun createSlashCommand(command: ImplementedCommand.() -> Unit): Command {
     val cmd = ImplementedCommand()
     cmd.command()
     return cmd.build()
+}
+
+fun main() {
+
+    createSlashCommand {
+        name = "test"
+        description = "toll"
+
+        options {
+            option {
+                name = "test"
+            }
+        }
+    }
 }

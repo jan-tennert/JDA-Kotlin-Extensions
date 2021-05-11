@@ -27,6 +27,9 @@ class KSubCommand(name: String, description: String) {
     ) {
         val o = KOption(name, description, type, required)
         o.option()
+        if (o.name.isBlank()) throw IllegalArgumentException("An option requires a name")
+        if (o.description.isBlank()) throw IllegalArgumentException("An option requires a description")
+        if (o.type == OptionType.UNKNOWN) throw IllegalArgumentException("An option requires a option type")
         val realOption = OptionData(o.type, o.name, o.description)
             .setRequired(o.required)
         for (choice in o.choices) {

@@ -15,7 +15,9 @@ class KSubCommandGroup(var name: String, var description: String) {
         }
     }
 
-    fun build(): SubcommandGroupData {
+    internal fun build(): SubcommandGroupData {
+        if (name.isBlank()) throw IllegalArgumentException("A subcommandgroup requires a name")
+        if (description.isBlank()) throw IllegalArgumentException("A subcommandgroup requires a description")
         val c = SubcommandGroupData(name, description)
         for (command in commands) {
             c.addSubcommand(command)
