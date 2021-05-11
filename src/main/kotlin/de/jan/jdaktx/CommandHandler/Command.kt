@@ -119,17 +119,3 @@ fun createSlashCommand(command: ImplementedCommand.() -> Unit): Command {
     cmd.command()
     return cmd.build()
 }
-
-fun main() {
-
-    createSlashCommand {
-        name = "test"
-        description = "toll"
-
-        options {
-            option {
-                name = "test"
-            }
-        }
-    }
-}
