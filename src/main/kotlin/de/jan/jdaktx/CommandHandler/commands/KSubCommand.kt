@@ -3,6 +3,7 @@ package de.jan.jdaktx.CommandHandler.commands
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
+import net.dv8tion.jda.internal.utils.Checks
 
 class KSubCommand(name: String, description: String) {
 
@@ -27,9 +28,9 @@ class KSubCommand(name: String, description: String) {
     ) {
         val o = KOption(name, description, type, required)
         o.option()
-        if (o.name.isBlank()) throw IllegalArgumentException("An option requires a name")
-        if (o.description.isBlank()) throw IllegalArgumentException("An option requires a description")
-        if (o.type == OptionType.UNKNOWN) throw IllegalArgumentException("An option requires a option type")
+        Checks.check(o.name.isBlank(), "An option requires a name")
+        Checks.check(o.description.isBlank(), "An option requires a description")
+        Checks.check(o.type == OptionType.UNKNOWN, "An option requires an option type")
         val realOption = OptionData(o.type, o.name, o.description)
             .setRequired(o.required)
         for (choice in o.choices) {

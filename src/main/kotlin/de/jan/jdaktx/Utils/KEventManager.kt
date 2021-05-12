@@ -27,8 +27,9 @@ class KEventManager : IEventManager {
     }
 
     override fun handle(e: GenericEvent) {
-        for (listener in listeners) {
-            listener.onEvent(e)
+        val iterator = listeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().onEvent(e)
         }
     }
 

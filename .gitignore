@@ -1,3 +1,4 @@
 # Project exclude paths
 /target/
 JDA-Ktx.iml
+/src/main/kotlin/de/jan/jdaktx/Test.kt

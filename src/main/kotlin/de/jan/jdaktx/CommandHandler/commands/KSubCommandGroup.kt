@@ -2,6 +2,7 @@ package de.jan.jdaktx.CommandHandler.commands
 
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData
+import net.dv8tion.jda.internal.utils.Checks
 
 class KSubCommandGroup(var name: String, var description: String) {
 
@@ -16,8 +17,8 @@ class KSubCommandGroup(var name: String, var description: String) {
     }
 
     internal fun build(): SubcommandGroupData {
-        if (name.isBlank()) throw IllegalArgumentException("A subcommandgroup requires a name")
-        if (description.isBlank()) throw IllegalArgumentException("A subcommandgroup requires a description")
+        Checks.check(name.isBlank(), "A Subcommandgroup requires a name")
+        Checks.check(description.isBlank(), "A Subcommandgroup requires a description")
         val c = SubcommandGroupData(name, description)
         for (command in commands) {
             c.addSubcommand(command)

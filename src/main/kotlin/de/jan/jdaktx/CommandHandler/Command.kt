@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
 import net.dv8tion.jda.api.interactions.commands.CommandHook
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
+import net.dv8tion.jda.internal.utils.Checks
 
 abstract class Command(
     name: String,
@@ -89,8 +90,8 @@ class ImplementedCommand {
     }
 
     internal fun build(): Command {
-        if (name.isBlank()) throw IllegalArgumentException("A command requires a name")
-        if (description.isBlank()) throw IllegalArgumentException("A command requires a description")
+        Checks.check(name.isBlank(), "A command requires a name")
+        Checks.check(description.isBlank(), "A command requires a description")
         return command
     }
 
