@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.restaction.CommandUpdateAction
+import net.dv8tion.jda.internal.utils.Checks
 
 class CommandHandler(val jda: JDA) : ListenerAdapter() {
 
@@ -15,11 +16,27 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
 
     override fun onSlashCommand(event: SlashCommandEvent) {
         for (command in commands) {
-            if(event.name == command.name) {
-                if(event.member != null) {
-                    command.run(if(event.isFromGuild) event.textChannel else null, event.member, event.user, if(!event.isFromGuild) event.privateChannel else null, event.hook, event.options, event)
+            if (event.name == command.name) {
+                if (event.member != null) {
+                    command.run(
+                        if (event.isFromGuild) event.textChannel else null,
+                        event.member,
+                        event.user,
+                        if (!event.isFromGuild) event.privateChannel else null,
+                        event.hook,
+                        event.options,
+                        event
+                    )
                 } else {
-                    command.run(if(event.isFromGuild) event.textChannel else null, event.member, event.user, if(!event.isFromGuild) event.privateChannel else null, event.hook, event.options, event)
+                    command.run(
+                        if (event.isFromGuild) event.textChannel else null,
+                        event.member,
+                        event.user,
+                        if (!event.isFromGuild) event.privateChannel else null,
+                        event.hook,
+                        event.options,
+                        event
+                    )
                 }
             }
         }
@@ -33,11 +50,13 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
         for (command in commands) {
             if (!command.autoRegister) continue
             index++
-            if(command.guildID != null) {
-                if(guild.containsKey(command.guildID)) {
+            if (command.guildID != null) {
+                if (guild.containsKey(command.guildID)) {
                     guild[command.guildID]!!.addCommands(command)
                 } else {
-                    guild[command.guildID!!] = jda.getGuildById(command.guildID!!)!!.updateCommands().addCommands(command)
+                    val g = jda.getGuildById(command.guildID!!)
+                    Checks.notNull(g, "Guild (${command.guildID})")
+                    guild[command.guildID!!] = g!!.updateCommands().addCommands(command)
                 }
             } else {
                 global.addCommands(command)

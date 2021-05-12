@@ -90,8 +90,8 @@ class ImplementedCommand {
     }
 
     internal fun build(): Command {
-        Checks.check(name.isBlank(), "A command requires a name")
-        Checks.check(description.isBlank(), "A command requires a description")
+        Checks.check(name.isNotBlank(), "A command requires a name")
+        Checks.check(description.isNotBlank(), "A command requires a description")
         return command
     }
 

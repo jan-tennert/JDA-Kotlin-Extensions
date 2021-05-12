@@ -83,13 +83,13 @@ class KEmbedBuilder {
         embedBuilder.clear()
     }
 
-    fun build() : MessageEmbed {
+    fun build(): MessageEmbed {
         return embedBuilder.build()
     }
 
 }
 
-fun messageEmbed(init: KEmbedBuilder.() -> Unit) : MessageEmbed {
+fun messageEmbed(init: KEmbedBuilder.() -> Unit): MessageEmbed {
     val builder = KEmbedBuilder()
     builder.init()
     return builder.build()
