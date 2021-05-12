@@ -31,6 +31,7 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
         this.commands.addAll(commands)
         var index = 0
         for (command in commands) {
+            println(command.name)
             if (!command.autoRegister) continue
             index++
             if(command.guildID != null) {
