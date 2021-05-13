@@ -15,8 +15,6 @@ val jda = JDABuilder.createDefault("token").build()
 val commandHandler = CommandHandler(jda)
 
 jda.awaitReady()
-//If it a guild only command you can do
-test.guildID = 98318748314
 
 //You can create a command through a class:
 
