@@ -1,4 +1,4 @@
-package de.jan.jdaktx.KClasses.KEmbeds
+package de.jan.jdaktx.classes.embeds
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
@@ -83,13 +83,13 @@ class KEmbedBuilder {
         embedBuilder.clear()
     }
 
-    fun build() : MessageEmbed {
+    fun build(): MessageEmbed {
         return embedBuilder.build()
     }
 
 }
 
-fun messageEmbed(init: KEmbedBuilder.() -> Unit) : MessageEmbed {
+fun messageEmbed(init: KEmbedBuilder.() -> Unit): MessageEmbed {
     val builder = KEmbedBuilder()
     builder.init()
     return builder.build()

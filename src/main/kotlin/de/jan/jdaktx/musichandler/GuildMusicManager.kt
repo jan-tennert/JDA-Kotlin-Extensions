@@ -1,4 +1,4 @@
-package de.jan.jdaktx.MusicHandler
+package de.jan.jdaktx.musichandler
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager

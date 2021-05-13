@@ -1,6 +1,6 @@
-package de.jan.jdaktx.KClasses.KRoles
+package de.jan.jdaktx.classes.roles
 
-import de.jan.jdaktx.KClasses.Permissions
+import de.jan.jdaktx.classes.Permissions
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.requests.restaction.RoleAction
 import java.awt.Color

@@ -1,9 +1,9 @@
-package de.jan.jdaktx.Utils
+package de.jan.jdaktx.utils
 
-fun <T>Collection<T>.toFormattedString(separator: String = ", ") : String {
+fun <T> Collection<T>.toFormattedString(separator: String = ", "): String {
     var string = ""
     for ((index, t) in this.withIndex()) {
-        if(index != this.size - 1) {
+        if (index != this.size - 1) {
             string += t.toString() + separator
         } else {
             string += t.toString()
@@ -12,10 +12,10 @@ fun <T>Collection<T>.toFormattedString(separator: String = ", ") : String {
     return string
 }
 
-fun <T>Array<T>.toFormattedString(separator: String = ", ") : String {
+fun <T> Array<T>.toFormattedString(separator: String = ", "): String {
     var string = ""
     for ((index, t) in this.withIndex()) {
-        if(index != this.size - 1) {
+        if (index != this.size - 1) {
             string += t.toString() + separator
         } else {
             string += t.toString()

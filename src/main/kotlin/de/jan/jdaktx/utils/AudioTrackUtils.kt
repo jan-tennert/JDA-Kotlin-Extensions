@@ -1,4 +1,4 @@
-package de.jan.jdaktx.Utils
+package de.jan.jdaktx.utils
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import kotlin.math.abs

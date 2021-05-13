@@ -1,6 +1,6 @@
-package de.jan.jdaktx.KClasses.KChannel
+package de.jan.jdaktx.classes.channel
 
-import de.jan.jdaktx.KClasses.Permissions
+import de.jan.jdaktx.classes.Permissions
 import net.dv8tion.jda.api.entities.*
 import net.dv8tion.jda.api.requests.restaction.ChannelAction
 

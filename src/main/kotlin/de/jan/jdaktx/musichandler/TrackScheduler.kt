@@ -1,4 +1,4 @@
-package de.jan.jdaktx.MusicHandler
+package de.jan.jdaktx.musichandler
 
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
@@ -19,8 +19,7 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) 
     }
 
     fun queue(track: AudioTrack) {
-        if (player.startTrack(track, true)) {
-        } else {
+        if (!player.startTrack(track, true)) {
             queue.offer(track)
         }
     }
