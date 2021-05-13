@@ -1,13 +1,12 @@
 package de.jan.jdaktx.utils
 
 import de.jan.jdaktx.classes.utils.KPresence
-import net.dv8tion.jda.api.entities.Category
-import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.entities.VoiceChannel
+import net.dv8tion.jda.api.entities.*
 import net.dv8tion.jda.api.events.channel.category.CategoryDeleteEvent
 import net.dv8tion.jda.api.events.channel.text.TextChannelDeleteEvent
 import net.dv8tion.jda.api.events.channel.voice.VoiceChannelDeleteEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent
@@ -143,6 +142,32 @@ fun Category.onDeletion(onDelete: (CategoryDeleteEvent) -> Unit) {
     manager.on<CategoryDeleteEvent> {
         if (it.category.id == this.id) {
             onDelete(it)
+        }
+    }
+}
+
+fun Guild.onMemberJoin(onJoin: (GuildMemberJoinEvent) -> Unit) {
+    Checks.check(
+        jda.eventManager is KEventManager,
+        "You need to set the Event Manager to KEventManager in order to use custom events"
+    )
+    val manager = jda.eventManager as KEventManager
+    manager.on<GuildMemberJoinEvent> {
+        if (it.guild.id == this.id) {
+            onJoin(it)
+        }
+    }
+}
+
+fun Guild.onMemberLeave(onLeave: (GuildMemberRemoveEvent) -> Unit) {
+    Checks.check(
+        jda.eventManager is KEventManager,
+        "You need to set the Event Manager to KEventManager in order to use custom events"
+    )
+    val manager = jda.eventManager as KEventManager
+    manager.on<GuildMemberRemoveEvent> {
+        if (it.guild.id == this.id) {
+            onLeave(it)
         }
     }
 }
