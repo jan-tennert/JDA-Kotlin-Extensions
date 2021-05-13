@@ -97,10 +97,15 @@ manager.on<GuildMessageReceivedEvent>() {
 
 ```kotlin
 
-val voiceChannel = ...
+val guild = (guild)
+val voiceChannel = guild.getVoiceChannelById("id")
 
 voiceChannel.onMemberJoin {
       println("Member join"")
+}
+
+guild.onMemberJoin {
+      println("new member joined")
 }
 
 ```
