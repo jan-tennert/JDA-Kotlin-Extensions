@@ -38,7 +38,7 @@ class testCommand : Command("hi", "This is a Test Command") {
 }
 
 
-//Or thrugh a type safe builder:
+//Or through a type safe builder:
 commandHandler.registerCommands(createSlashCommand {
      name = "hi"
      description = "Say hi to the bot"
