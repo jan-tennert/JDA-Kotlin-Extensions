@@ -22,7 +22,7 @@ test.guildID = 98318748314
 
 commandHandler.registerCommands(testCommand())
 
-class testCommand : Command("hi", "This is a Test Command") {
+class testCommand : Command("hi", "Say hi to the bot") {
       override fun run(
             channel: TextChannel?,
             member: Member?,
@@ -32,8 +32,7 @@ class testCommand : Command("hi", "This is a Test Command") {
             options: MutableList<SlashCommandEvent.OptionData>,
             event: SlashCommandEvent
         ) {
-            event.reply("Hallo!").queue()
-        }
+            event.reply("Hi, ${event.user.name}!").queue()
 
 }
 
