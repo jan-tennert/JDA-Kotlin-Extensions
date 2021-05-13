@@ -39,7 +39,7 @@ class testCommand : Command("hi", "This is a Test Command") {
 
 
 //Or thrugh a type safe builder:
-c.registerCommands(createSlashCommand {
+commandHandler.registerCommands(createSlashCommand {
      name = "hi"
      description = "Say hi to the bot"
      guildID = 631131922424135716
