@@ -15,12 +15,14 @@ val jda = JDABuilder.createDefault("token").build()
 val commandHandler = CommandHandler(jda)
 
 jda.awaitReady()
-val test = testCommand()
 //If it a guild only command you can do
 test.guildID = 98318748314
-commandHandler.registerCommands(test)
 
-class testCommand : Command("test", "This is a Test Command") {
+//You can create a command through a class:
+
+commandHandler.registerCommands(testCommand())
+
+class testCommand : Command("hi", "This is a Test Command") {
       override fun run(
             channel: TextChannel?,
             member: Member?,
@@ -30,20 +32,22 @@ class testCommand : Command("test", "This is a Test Command") {
             options: MutableList<SlashCommandEvent.OptionData>,
             event: SlashCommandEvent
         ) {
-            val embed = messageEmbed {
-                title("Title")
-                field() {
-                    name = "Field"
-                    value = "Value"
-                    inline = true
-                }
-                timestamp(Date())
-                footer("Footer")
-            }
-            event.reply(embed).queue()
+            event.reply("Hallo!").queue()
         }
 
 }
+
+
+//Or thrugh a type safe builder:
+c.registerCommands(createSlashCommand {
+     name = "hi"
+     description = "Say hi to the bot"
+     guildID = 631131922424135716
+
+     action {
+        it.reply("Hi, ${it.user.name}").queue()
+     }
+})
 ```
 
 ### Create roles & guild channels in custom event manager
