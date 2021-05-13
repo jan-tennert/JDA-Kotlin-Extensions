@@ -91,6 +91,8 @@ manager.on<GuildMessageReceivedEvent>() {
      }
 }
 
+```
+
 ### Custom events on channels, guilds
 
 ```kotlin
