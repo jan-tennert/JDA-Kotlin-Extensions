@@ -101,7 +101,7 @@ val guild = (guild)
 val voiceChannel = guild.getVoiceChannelById("id")
 
 voiceChannel.onMemberJoin {
-      println("Member join"")
+      println("Member join")
 }
 
 guild.onMemberJoin {
