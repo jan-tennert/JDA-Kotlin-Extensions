@@ -90,3 +90,17 @@ manager.on<GuildMessageReceivedEvent>() {
             
      }
 }
+
+### Custom events on channels, guilds
+
+```kotlin
+
+val voiceChannel = ...
+
+voiceChannel.onMemberJoin {
+      println("Member join"")
+}
+
+```
+
+#### There are much more custom events!
