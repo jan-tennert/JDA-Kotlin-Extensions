@@ -1,5 +1,8 @@
-package de.jan.jdaktx.utils
+package de.jan.jdaktx.eventmanager
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.Event
 import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.hooks.EventListener
@@ -37,13 +40,23 @@ class KEventManager : IEventManager {
         return listeners
     }
 
-    inline fun <reified T : Event> on(crossinline event: (T) -> Unit) {
-        val listener = EventListener {
-            if (it is T) {
+}
+
+inline fun <reified T : Event> JDA.on(crossinline event: suspend (T) -> Unit) {
+    if (!this.hasKotlinExtensions) setupKotlinExtensions()
+    val listener = EventListener {
+        if (it is T) {
+            GlobalScope.launch {
                 event.invoke(it)
             }
         }
-        listeners.add(listener)
     }
-
+    this.addEventListener(listener)
 }
+
+fun JDA.setupKotlinExtensions() {
+    this.setEventManager(KEventManager())
+}
+
+val JDA.hasKotlinExtensions: Boolean
+    get() = eventManager is KEventManager
