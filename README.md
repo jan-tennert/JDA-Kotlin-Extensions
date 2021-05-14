@@ -52,12 +52,11 @@ commandHandler.registerCommands(createSlashCommand {
 
 ```kotlin
 
-val manager = KEventManager()
 val jda = JDABuilder.createDefault("token")
       .setEventManager(manager)
       .build()
 
-manager.on<GuildMessageReceivedEvent>() {
+jda.on<GuildMessageReceivedEvent>() {
      it.channel.sendMessage("Received Message!").queue()
         
      //Create channel:
