@@ -1,6 +1,7 @@
-# JDA-Ktx
+# JDA-Kotlin-Extensions
 
 JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-Safe Builders and it has a built in SlashCommandHandler.
+This package is mainly for me but you can also contribute.
 
 # Installation
 
