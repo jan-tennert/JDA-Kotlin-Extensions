@@ -115,6 +115,10 @@ class ImplementedCommand {
 
 }
 
+/**
+ * Creates a new slash command through a type safe way.
+ * name and description are required
+ */
 fun createSlashCommand(command: ImplementedCommand.() -> Unit): Command {
     val cmd = ImplementedCommand()
     cmd.command()

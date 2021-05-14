@@ -17,8 +17,8 @@ class KSubCommandGroup(var name: String, var description: String) {
     }
 
     internal fun build(): SubcommandGroupData {
-        Checks.check(name.isBlank(), "A Subcommandgroup requires a name")
-        Checks.check(description.isBlank(), "A Subcommandgroup requires a description")
+        Checks.check(name.isNotBlank(), "A Subcommandgroup requires a name")
+        Checks.check(description.isNotBlank(), "A Subcommandgroup requires a description")
         val c = SubcommandGroupData(name, description)
         for (command in commands) {
             c.addSubcommand(command)

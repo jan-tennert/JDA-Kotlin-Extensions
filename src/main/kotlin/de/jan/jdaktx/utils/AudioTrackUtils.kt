@@ -3,6 +3,9 @@ package de.jan.jdaktx.utils
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import kotlin.math.abs
 
+/**
+ * Returns the type of the track
+ */
 val AudioTrack.type: VideoType
     get() {
         val url = this.info.uri
@@ -17,6 +20,9 @@ val AudioTrack.type: VideoType
         }
     }
 
+/**
+ * Formats the duration of the track to HH:mm:ss
+ */
 fun AudioTrack.toFormattedDuration(): String {
     val dur = java.time.Duration.ofMillis(this.duration)
     val absSeconds = abs(dur.seconds)

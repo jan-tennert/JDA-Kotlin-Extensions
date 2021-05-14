@@ -16,7 +16,9 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent
 import net.dv8tion.jda.api.managers.Presence
 import net.dv8tion.jda.internal.utils.Checks
 
-
+/**
+ * Called when a reaction is added to the message
+ */
 fun Message.onReactionAdd(
     predicate: (MessageReactionAddEvent) -> Boolean = { true },
     onReaction: (MessageReactionAddEvent) -> Unit
@@ -33,6 +35,9 @@ fun Message.onReactionAdd(
     }
 }
 
+/**
+ * Called when a reaction is removed from the message
+ */
 fun Message.onReactionRemove(
     predicate: (MessageReactionRemoveEvent) -> Boolean = { true },
     onReaction: (MessageReactionRemoveEvent) -> Unit
@@ -49,6 +54,9 @@ fun Message.onReactionRemove(
     }
 }
 
+/**
+ * Called when the message is deleted
+ */
 fun Message.onDeletion(onDelete: (MessageDeleteEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -62,6 +70,9 @@ fun Message.onDeletion(onDelete: (MessageDeleteEvent) -> Unit) {
     }
 }
 
+/**
+ * Called when a member joins the voice channel
+ */
 fun VoiceChannel.onMemberJoin(
     predicate: (GuildVoiceJoinEvent) -> Boolean = { true },
     onJoin: (GuildVoiceJoinEvent) -> Unit
@@ -78,6 +89,9 @@ fun VoiceChannel.onMemberJoin(
     }
 }
 
+/**
+ * Called when a member leaves this voice channel
+ */
 fun VoiceChannel.onMemberLeave(
     predicate: (GuildVoiceLeaveEvent) -> Boolean = { true },
     onLeft: (GuildVoiceLeaveEvent) -> Unit
@@ -94,6 +108,9 @@ fun VoiceChannel.onMemberLeave(
     }
 }
 
+/**
+ * Called when this voice channel is deleted
+ */
 fun VoiceChannel.onDeletion(onDelete: (VoiceChannelDeleteEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -107,6 +124,9 @@ fun VoiceChannel.onDeletion(onDelete: (VoiceChannelDeleteEvent) -> Unit) {
     }
 }
 
+/**
+ * Called when this text channel is deleted
+ */
 fun TextChannel.onDeletion(onDelete: (TextChannelDeleteEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -120,6 +140,9 @@ fun TextChannel.onDeletion(onDelete: (TextChannelDeleteEvent) -> Unit) {
     }
 }
 
+/**
+ * Called when someone enters a message in this channel
+ */
 fun TextChannel.onMessage(onMessage: (GuildMessageReceivedEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -133,6 +156,9 @@ fun TextChannel.onMessage(onMessage: (GuildMessageReceivedEvent) -> Unit) {
     }
 }
 
+/**
+ * Called when someone deletes this category
+ */
 fun Category.onDeletion(onDelete: (CategoryDeleteEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -146,6 +172,9 @@ fun Category.onDeletion(onDelete: (CategoryDeleteEvent) -> Unit) {
     }
 }
 
+/**
+ * Called when someone joins this guild
+ */
 fun Guild.onMemberJoin(onJoin: (GuildMemberJoinEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -159,6 +188,9 @@ fun Guild.onMemberJoin(onJoin: (GuildMemberJoinEvent) -> Unit) {
     }
 }
 
+/**
+ * Called when someone leaves this guild
+ */
 fun Guild.onMemberLeave(onLeave: (GuildMemberRemoveEvent) -> Unit) {
     Checks.check(
         jda.eventManager is KEventManager,
@@ -172,6 +204,9 @@ fun Guild.onMemberLeave(onLeave: (GuildMemberRemoveEvent) -> Unit) {
     }
 }
 
+/**
+ * Change the activity and the online status of the bot through a type safe way
+ */
 fun Presence.changeActivity(presence: KPresence.() -> Unit) {
     val p = KPresence(this)
     p.presence()

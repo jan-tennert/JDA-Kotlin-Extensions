@@ -8,10 +8,13 @@ import net.dv8tion.jda.internal.utils.Checks
 class KPresence(private val presence: Presence) {
 
     var onlineStatus = presence.status
-        set(value) {
+        private set(value) {
             field = value
             this.presence.setStatus(value)
         }
+        get() = presence.status
+    val activity: Activity?
+        get() = presence.activity
 
     fun playing(text: String) {
         presence.activity = Activity.playing(text)
@@ -32,6 +35,13 @@ class KPresence(private val presence: Presence) {
 
     fun competing(text: String) {
         presence.activity = Activity.competing(text)
+    }
+
+    /**
+     * Sets the activity to null
+     */
+    fun reset() {
+        presence.activity = null
     }
 
     fun online() {
