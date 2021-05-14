@@ -5,6 +5,10 @@ import okhttp3.Request
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 
+/**
+ * A class to find videos on YouTube
+ * @param apiKey You get get an api key on google's developer console
+ */
 class YouTubeUtils(val apiKey: String) {
 
     private val okhttp = OkHttpClient()
