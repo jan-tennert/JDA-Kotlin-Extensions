@@ -4,74 +4,70 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.internal.utils.Checks
 import java.awt.Color
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.temporal.TemporalAccessor
-import java.util.*
 
 class KEmbedBuilder {
 
     private val embedBuilder = EmbedBuilder()
+    var footer: String? = null
+        set(value) {
+            field = value
+            embedBuilder.setFooter(value, null)
+        }
+    var title: String? = null
+        set(value) {
+            field = value
+            embedBuilder.setTitle(value, null)
+        }
+    var author: String? = null
+        set(value) {
+            field = value
+            embedBuilder.setTitle(value, null)
+        }
+    var thumbnail: String? = null
+        set(value) {
+            field = value
+            embedBuilder.setThumbnail(value)
+        }
+    var image: String? = null
+        set(value) {
+            field = value
+            embedBuilder.setImage(value)
+        }
+    var description: String? = null
+        set(value) {
+            field = value
+            embedBuilder.setDescription(value)
+        }
+    var color: Color? = null
+        set(value) {
+            field = value
+            embedBuilder.setColor(value)
+        }
 
-    fun title(title: String?, url: String? = null) {
-        embedBuilder.setTitle(title, url)
+    fun title(init: Title.() -> Unit) {
+        val title = Title()
+        title.init()
+        embedBuilder.setTitle(title.title, title.url)
     }
 
-    fun author(name: String?, url: String? = null, iconURL: String? = null) {
-        embedBuilder.setAuthor(name, url, iconURL)
+    fun author(init: Author.() -> Unit) {
+        val author = Author()
+        author.init()
+        embedBuilder.setAuthor(author.name, author.url, author.iconURL)
     }
 
-    fun color(color: Int) {
-        embedBuilder.setColor(color)
+    fun footer(c: Footer.() -> Unit) {
+        val footer = Footer()
+        footer.c()
+        embedBuilder.setFooter(footer.text, footer.iconURL)
     }
 
-    fun color(color: Color?) {
-        embedBuilder.setColor(color)
-    }
-
-    fun image(imageURL: String?) {
-        embedBuilder.setImage(imageURL)
-    }
-
-    fun thumbnail(url: String?) {
-        embedBuilder.setThumbnail(url)
-        embedBuilder.addField(MessageEmbed.Field("", "", true))
-    }
-
-    fun footer(text: String?, iconURL: String? = null) {
-        embedBuilder.setFooter(text, iconURL)
-    }
-
-    fun timestamp(timestamp: TemporalAccessor) {
-        embedBuilder.setTimestamp(timestamp)
-    }
-
-    fun timestamp(timestamp: Date) {
-        embedBuilder.setTimestamp(timestamp.toInstant())
-    }
-
-    fun timestamp(timestamp: LocalDate) {
-        embedBuilder.setTimestamp(timestamp.atStartOfDay(ZoneId.systemDefault()).toInstant())
-    }
-
-    fun description(description: String?) {
-        embedBuilder.setDescription(description)
-    }
-
-    fun appendDescription(description: String) {
-        embedBuilder.appendDescription(description)
-    }
-
-    fun field(init: KEmbedField.() -> Unit) {
-        val field = KEmbedField()
+    fun field(init: Field.() -> Unit) {
+        val field = Field()
         field.init()
-        Checks.check(field.name.isNotBlank(), "An embed field name can't be empty")
-        Checks.check(field.value.isNotBlank(), "An embed field value can't be empty")
-        embedBuilder.addField(field.name, field.value, field.inline)
-    }
-
-    fun field(name: String, value: String, inline: Boolean) {
-        embedBuilder.addField(name, value, inline)
+        Checks.check(!field.text.isNullOrBlank(), "An embed field name can't be empty")
+        Checks.check(!field.value.isNullOrBlank(), "An embed field value can't be empty")
+        embedBuilder.addField(field.text, field.value, field.inline)
     }
 
     fun blankField(inline: Boolean = false) {
@@ -91,6 +87,11 @@ class KEmbedBuilder {
     }
 
 }
+
+data class Footer(var text: String? = null, var iconURL: String? = null)
+data class Title(var title: String? = null, var url: String? = null)
+data class Author(var name: String? = null, var url: String? = null, var iconURL: String? = null)
+data class Field(var text: String? = null, var value: String? = null, var inline: Boolean = false)
 
 fun messageEmbed(init: KEmbedBuilder.() -> Unit): MessageEmbed {
     val builder = KEmbedBuilder()
