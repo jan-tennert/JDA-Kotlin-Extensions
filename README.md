@@ -44,7 +44,16 @@ commandHandler.registerCommands(createSlashCommand {
      guildID = 631131922424135716
 
      action {
-        it.reply("Hi, ${it.user.name}").queue()
+        val embed = messageEmbed {
+            title = "Title!!"
+            footer = "footer"
+            field {
+                name = "field"
+                value = "value"
+                inline = false
+            }
+        }
+        it.reply(embed).queue()
      }
 })
 ```
