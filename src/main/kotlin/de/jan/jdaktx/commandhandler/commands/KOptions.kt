@@ -17,9 +17,9 @@ class KOptions {
     ) {
         val o = KOption(name, description, type, required)
         o.option()
-        Checks.check(o.name.isBlank(), "An option requires a name")
-        Checks.check(o.description.isBlank(), "An option requires a description")
-        Checks.check(o.type == OptionType.UNKNOWN, "An option requires an option type")
+        Checks.check(o.name.isNotBlank(), "An option requires a name")
+        Checks.check(o.description.isNotBlank(), "An option requires a description")
+        Checks.check(o.type != OptionType.UNKNOWN, "An option requires an option type")
 
         val realOption = OptionData(o.type, o.name, o.description)
             .setRequired(o.required)

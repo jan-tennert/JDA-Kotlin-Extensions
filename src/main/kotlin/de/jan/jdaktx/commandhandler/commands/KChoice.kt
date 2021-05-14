@@ -8,7 +8,7 @@ class KChoice {
 
     operator fun Pair<String, Any>.unaryPlus() {
         Checks.check(
-            this.second !is String && this.second !is Int,
+            this.second is String && this.second is Int,
             "The key of a choice can only bee a string or an int"
         )
         choices.add(this)

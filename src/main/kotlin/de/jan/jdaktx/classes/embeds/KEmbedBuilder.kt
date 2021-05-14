@@ -2,6 +2,7 @@ package de.jan.jdaktx.classes.embeds
 
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
+import net.dv8tion.jda.internal.utils.Checks
 import java.awt.Color
 import java.time.LocalDate
 import java.time.ZoneId
@@ -64,6 +65,8 @@ class KEmbedBuilder {
     fun field(init: KEmbedField.() -> Unit) {
         val field = KEmbedField()
         field.init()
+        Checks.check(field.name.isNotBlank(), "An embed field name can't be empty")
+        Checks.check(field.value.isNotBlank(), "An embed field value can't be empty")
         embedBuilder.addField(field.name, field.value, field.inline)
     }
 
