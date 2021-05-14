@@ -7,7 +7,7 @@ import net.dv8tion.jda.internal.utils.Checks
 
 class KPresence(private val presence: Presence) {
 
-    var onlineStatus = presence.status
+    private var onlineStatus = presence.status
         set(value) {
             field = value
             this.presence.setStatus(value)

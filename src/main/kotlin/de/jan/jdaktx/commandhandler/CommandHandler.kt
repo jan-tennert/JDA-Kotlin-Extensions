@@ -42,6 +42,9 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
         }
     }
 
+    /**
+     * Register commands you created using [Command] or [createSlashCommand]
+     */
     fun registerCommands(vararg commands: Command) {
         val global = jda.updateCommands()
         val guild = hashMapOf<Long, CommandUpdateAction>()
@@ -55,7 +58,7 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
                     guild[command.guildID]!!.addCommands(command)
                 } else {
                     val g = jda.getGuildById(command.guildID!!)
-                    Checks.notNull(g, "Guild (${command.guildID})")
+                    Checks.notNull(g, "Bot Guild (${command.guildID})")
                     guild[command.guildID!!] = g!!.updateCommands().addCommands(command)
                 }
             } else {
