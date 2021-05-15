@@ -1,6 +1,8 @@
-# JDA-Ktx
+# JDA-Kotlin-Extensions
 
-JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-Safe Builders and it has a built in SlashCommandHandler.
+JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-Safe Builders and it has a built in SlashCommandHandler, Music Manager + Event Manager (with coroutines).
+This package is mainly for me but you can also contribute.
++ The Slash Commands will likely change because jda's slash commands are not done
 
 # Installation
 
@@ -42,7 +44,16 @@ commandHandler.registerCommands(createSlashCommand {
      guildID = 631131922424135716
 
      action {
-        it.reply("Hi, ${it.user.name}").queue()
+        val embed = messageEmbed {
+            title = "Title!!"
+            footer = "footer"
+            field {
+                name = "field"
+                value = "value"
+                inline = false
+            }
+        }
+        it.reply(embed).queue()
      }
 })
 ```
@@ -51,12 +62,11 @@ commandHandler.registerCommands(createSlashCommand {
 
 ```kotlin
 
-val manager = KEventManager()
 val jda = JDABuilder.createDefault("token")
       .setEventManager(manager)
       .build()
 
-manager.on<GuildMessageReceivedEvent>() {
+jda.on<GuildMessageReceivedEvent>() {
      it.channel.sendMessage("Received Message!").queue()
         
      //Create channel:
