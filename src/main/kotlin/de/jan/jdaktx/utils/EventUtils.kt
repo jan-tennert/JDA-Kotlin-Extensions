@@ -21,7 +21,7 @@ import net.dv8tion.jda.api.managers.Presence
  */
 fun Message.onReactionAdd(
     predicate: (MessageReactionAddEvent) -> Boolean = { true },
-    onReaction: (MessageReactionAddEvent) -> Unit
+    onReaction: suspend (MessageReactionAddEvent) -> Unit
 ) {
     jda.on<MessageReactionAddEvent> {
         if (predicate(it) && it.messageId == this.id) {
@@ -35,7 +35,7 @@ fun Message.onReactionAdd(
  */
 fun Message.onReactionRemove(
     predicate: (MessageReactionRemoveEvent) -> Boolean = { true },
-    onReaction: (MessageReactionRemoveEvent) -> Unit
+    onReaction: suspend (MessageReactionRemoveEvent) -> Unit
 ) {
     jda.on<MessageReactionRemoveEvent> {
         if (predicate(it) && it.messageId == this.id) {
@@ -47,7 +47,7 @@ fun Message.onReactionRemove(
 /**
  * Called when the message is deleted
  */
-fun Message.onDeletion(onDelete: (MessageDeleteEvent) -> Unit) {
+fun Message.onDeletion(onDelete: suspend (MessageDeleteEvent) -> Unit) {
     jda.on<MessageDeleteEvent> {
         if (it.messageId == this.id) {
             onDelete(it)
@@ -60,7 +60,7 @@ fun Message.onDeletion(onDelete: (MessageDeleteEvent) -> Unit) {
  */
 fun VoiceChannel.onMemberJoin(
     predicate: (GuildVoiceJoinEvent) -> Boolean = { true },
-    onJoin: (GuildVoiceJoinEvent) -> Unit
+    onJoin: suspend (GuildVoiceJoinEvent) -> Unit
 ) {
     jda.on<GuildVoiceJoinEvent> {
         if (it.channelJoined.id == this.id && predicate(it)) {
@@ -74,7 +74,7 @@ fun VoiceChannel.onMemberJoin(
  */
 fun VoiceChannel.onMemberLeave(
     predicate: (GuildVoiceLeaveEvent) -> Boolean = { true },
-    onLeft: (GuildVoiceLeaveEvent) -> Unit
+    onLeft: suspend (GuildVoiceLeaveEvent) -> Unit
 ) {
     jda.on<GuildVoiceLeaveEvent> {
         if (it.channelLeft.id == this.id && predicate(it)) {
@@ -86,7 +86,7 @@ fun VoiceChannel.onMemberLeave(
 /**
  * Called when this voice channel is deleted
  */
-fun VoiceChannel.onDeletion(onDelete: (VoiceChannelDeleteEvent) -> Unit) {
+fun VoiceChannel.onDeletion(onDelete: suspend (VoiceChannelDeleteEvent) -> Unit) {
     jda.on<VoiceChannelDeleteEvent> {
         if (it.channel.id == this.id) {
             onDelete(it)
@@ -97,7 +97,7 @@ fun VoiceChannel.onDeletion(onDelete: (VoiceChannelDeleteEvent) -> Unit) {
 /**
  * Called when this text channel is deleted
  */
-fun TextChannel.onDeletion(onDelete: (TextChannelDeleteEvent) -> Unit) {
+fun TextChannel.onDeletion(onDelete: suspend (TextChannelDeleteEvent) -> Unit) {
     jda.on<TextChannelDeleteEvent> {
         if (it.channel.id == this.id) {
             onDelete(it)
@@ -108,7 +108,7 @@ fun TextChannel.onDeletion(onDelete: (TextChannelDeleteEvent) -> Unit) {
 /**
  * Called when someone enters a message in this channel
  */
-fun TextChannel.onMessage(onMessage: (GuildMessageReceivedEvent) -> Unit) {
+fun TextChannel.onMessage(onMessage: suspend (GuildMessageReceivedEvent) -> Unit) {
     jda.on<GuildMessageReceivedEvent> {
         if (it.channel.id == this.id) {
             onMessage(it)
@@ -119,7 +119,7 @@ fun TextChannel.onMessage(onMessage: (GuildMessageReceivedEvent) -> Unit) {
 /**
  * Called when someone deletes this category
  */
-fun Category.onDeletion(onDelete: (CategoryDeleteEvent) -> Unit) {
+fun Category.onDeletion(onDelete: suspend (CategoryDeleteEvent) -> Unit) {
     jda.on<CategoryDeleteEvent> {
         if (it.category.id == this.id) {
             onDelete(it)
@@ -130,7 +130,7 @@ fun Category.onDeletion(onDelete: (CategoryDeleteEvent) -> Unit) {
 /**
  * Called when someone joins this guild
  */
-fun Guild.onMemberJoin(onJoin: (GuildMemberJoinEvent) -> Unit) {
+fun Guild.onMemberJoin(onJoin: suspend (GuildMemberJoinEvent) -> Unit) {
     jda.on<GuildMemberJoinEvent> {
         if (it.guild.id == this.id) {
             onJoin(it)
@@ -141,7 +141,7 @@ fun Guild.onMemberJoin(onJoin: (GuildMemberJoinEvent) -> Unit) {
 /**
  * Called when someone leaves this guild
  */
-fun Guild.onMemberLeave(onLeave: (GuildMemberRemoveEvent) -> Unit) {
+fun Guild.onMemberLeave(onLeave: suspend (GuildMemberRemoveEvent) -> Unit) {
     jda.on<GuildMemberRemoveEvent> {
         if (it.guild.id == this.id) {
             onLeave(it)
