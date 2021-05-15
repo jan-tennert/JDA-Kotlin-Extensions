@@ -33,7 +33,7 @@ class KEmbedBuilder {
             field = value
             embedBuilder.setImage(value)
         }
-    var description: String? = null
+    var description: String? = ""
         set(value) {
             field = value
             embedBuilder.setDescription(value)
