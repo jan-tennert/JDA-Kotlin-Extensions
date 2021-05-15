@@ -32,7 +32,15 @@ class KEventManager : IEventManager {
             val iterator = listeners.iterator()
             while (iterator.hasNext()) {
                 when (val next = iterator.next()) {
-                    is KEventListener -> next.onEvent(e)
+                    is KEventListener -> {
+                        if (next.maxRuns == -1) {
+                            next.onEvent(e)
+                        } else if (next.maxRuns > 0) {
+                            if (next.onEvent(e)) {
+                                next.maxRuns--
+                            }
+                        }
+                    }
                     is EventListener -> next.onEvent(e)
                 }
             }
@@ -45,13 +53,15 @@ class KEventManager : IEventManager {
 
 }
 
-inline fun <reified T : GenericEvent> JDA.on(crossinline event: suspend (T) -> Unit) {
+inline fun <reified T : GenericEvent> JDA.on(maxRuns: Int = -1, crossinline event: suspend (T) -> Unit) {
     if (!this.hasKotlinExtensions) setupKotlinExtensions()
-    val listener = object : KEventListener {
-        override suspend fun onEvent(e: GenericEvent) {
+    val listener = object : KEventListener(maxRuns) {
+        override suspend fun onEvent(e: GenericEvent): Boolean {
             if (e is T) {
                 event.invoke(e)
+                return true
             }
+            return false
         }
     }
     this.addEventListener(listener)
@@ -61,8 +71,8 @@ fun JDA.setupKotlinExtensions() {
     this.setEventManager(KEventManager())
 }
 
-interface KEventListener {
-    suspend fun onEvent(e: GenericEvent)
+abstract class KEventListener(var maxRuns: Int) {
+    abstract suspend fun onEvent(e: GenericEvent): Boolean
 }
 
 val JDA.hasKotlinExtensions: Boolean
