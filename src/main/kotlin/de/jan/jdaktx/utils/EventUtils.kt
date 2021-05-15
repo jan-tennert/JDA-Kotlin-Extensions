@@ -149,14 +149,6 @@ fun Guild.onMemberLeave(onLeave: (GuildMemberRemoveEvent) -> Unit) {
     }
 }
 
-fun TextChannel.waitForMessage(): Message? {
-    var message: Message? = null
-    jda.on<GuildMessageReceivedEvent>(1) {
-        message = it.message
-    }
-    return message
-}
-
 /**
  * Change the activity and the online status of the bot through a type safe way
  */
