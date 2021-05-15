@@ -53,13 +53,19 @@ class KEventManager : IEventManager {
 
 }
 
-inline fun <reified T : GenericEvent> JDA.on(maxRuns: Int = -1, crossinline event: suspend (T) -> Unit) {
+inline fun <reified T : GenericEvent> JDA.on(
+    maxRuns: Int = -1,
+    crossinline predicate: (T) -> Boolean = { true },
+    crossinline event: suspend (T) -> Unit
+) {
     if (!this.hasKotlinExtensions) setupKotlinExtensions()
     val listener = object : KEventListener(maxRuns) {
         override suspend fun onEvent(e: GenericEvent): Boolean {
             if (e is T) {
-                event.invoke(e)
-                return true
+                if (predicate(e)) {
+                    event.invoke(e)
+                    return true
+                }
             }
             return false
         }
