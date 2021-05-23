@@ -63,7 +63,6 @@ commandHandler.registerCommands(createSlashCommand {
 ```kotlin
 
 val jda = JDABuilder.createDefault("token")
-      .setEventManager(manager)
       .build()
 
 jda.on<GuildMessageReceivedEvent>() {
