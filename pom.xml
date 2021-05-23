@@ -92,9 +92,9 @@
             <version>1.3.76</version>
         </dependency>
         <dependency>
-            <groupId>com.github.DV8FromTheWorld</groupId>
+            <groupId>com.github.jan-tennert</groupId>
             <artifactId>JDA</artifactId>
-            <version>5951675</version>
+            <version>7b0fc8cbdb</version>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
