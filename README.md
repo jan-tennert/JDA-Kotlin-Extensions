@@ -64,7 +64,6 @@ class testCommand : Command("hi", "Say hi to the bot") {
 ```kotlin
 
 val jda = JDABuilder.createDefault("token")
-      .setEventManager(manager)
       .build()
 
 jda.on<GuildMessageReceivedEvent>() {
