@@ -8,7 +8,8 @@ import net.dv8tion.jda.api.entities.PrivateChannel
 import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
-import net.dv8tion.jda.api.interactions.commands.CommandHook
+import net.dv8tion.jda.api.interactions.InteractionHook
+import net.dv8tion.jda.api.interactions.commands.OptionMapping
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.internal.utils.Checks
 
@@ -24,8 +25,8 @@ abstract class Command(
         member: Member?,
         user: User,
         privateChannel: PrivateChannel?,
-        hook: CommandHook,
-        options: MutableList<SlashCommandEvent.OptionData>,
+        hook: InteractionHook,
+        options: MutableList<OptionMapping>,
         event: SlashCommandEvent
     )
 
@@ -104,8 +105,8 @@ class ImplementedCommand {
             member: Member?,
             user: User,
             privateChannel: PrivateChannel?,
-            hook: CommandHook,
-            options: MutableList<SlashCommandEvent.OptionData>,
+            hook: InteractionHook,
+            options: MutableList<OptionMapping>,
             event: SlashCommandEvent
         ) {
             action?.invoke(event)
