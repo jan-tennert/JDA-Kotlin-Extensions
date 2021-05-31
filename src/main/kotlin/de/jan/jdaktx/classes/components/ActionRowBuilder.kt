@@ -31,16 +31,7 @@ class KActionRow(private val jda: JDA?) {
         emoji: Emoji? = null,
         disabled: Boolean = false,
         init: KButton.() -> Unit
-    ) {
-        val button = KButton(id, label, emoji, disabled, ButtonStyle.PRIMARY)
-        button.init()
-        if (id != null) button.id = id
-        if (label != null) button.label = label
-        if (emoji != null) button.emoji = emoji
-        if (disabled != button.disabled) button.disabled = disabled
-        addButtonListener(button)
-        buttons.add(button)
-    }
+    ) = actionButton(id, label, emoji, disabled, ButtonStyle.PRIMARY, init)
 
     fun secondary(
         id: String? = null,
@@ -48,16 +39,7 @@ class KActionRow(private val jda: JDA?) {
         emoji: Emoji? = null,
         disabled: Boolean = false,
         init: KButton.() -> Unit
-    ) {
-        val button = KButton(id, label, emoji, disabled, ButtonStyle.SECONDARY)
-        button.init()
-        if (id != null) button.id = id
-        if (label != null) button.label = label
-        if (emoji != null) button.emoji = emoji
-        if (disabled != button.disabled) button.disabled = disabled
-        addButtonListener(button)
-        buttons.add(button)
-    }
+    ) = actionButton(id, label, emoji, disabled, ButtonStyle.SECONDARY, init)
 
     fun danger(
         id: String? = null,
@@ -65,16 +47,7 @@ class KActionRow(private val jda: JDA?) {
         emoji: Emoji? = null,
         disabled: Boolean = false,
         init: KButton.() -> Unit
-    ) {
-        val button = KButton(id, label, emoji, disabled, ButtonStyle.DANGER)
-        button.init()
-        if (id != null) button.id = id
-        if (label != null) button.label = label
-        if (emoji != null) button.emoji = emoji
-        if (disabled != button.disabled) button.disabled = disabled
-        addButtonListener(button)
-        buttons.add(button)
-    }
+    ) = actionButton(id, label, emoji, disabled, ButtonStyle.DANGER, init)
 
     fun success(
         id: String? = null,
@@ -82,16 +55,7 @@ class KActionRow(private val jda: JDA?) {
         emoji: Emoji? = null,
         disabled: Boolean = false,
         init: KButton.() -> Unit
-    ) {
-        val button = KButton(id, label, emoji, disabled, ButtonStyle.SUCCESS)
-        button.init()
-        if (id != null) button.id = id
-        if (label != null) button.label = label
-        if (emoji != null) button.emoji = emoji
-        if (disabled != button.disabled) button.disabled = disabled
-        addButtonListener(button)
-        buttons.add(button)
-    }
+    ) = actionButton(id, label, emoji, disabled, ButtonStyle.SUCCESS, init)
 
     fun link(
         url: String? = null,
@@ -106,6 +70,24 @@ class KActionRow(private val jda: JDA?) {
         if (label != null) button.label = label
         if (emoji != null) button.emoji = emoji
         if (disabled != button.disabled) button.disabled = disabled
+        buttons.add(button)
+    }
+
+    private fun actionButton(
+        id: String?,
+        label: String?,
+        emoji: Emoji?,
+        disabled: Boolean,
+        style: ButtonStyle,
+        init: KButton.() -> Unit
+    ) {
+        val button = KButton(id, label, emoji, disabled, style)
+        button.init()
+        if (id != null) button.id = id
+        if (label != null) button.label = label
+        if (emoji != null) button.emoji = emoji
+        if (disabled != button.disabled) button.disabled = disabled
+        addButtonListener(button)
         buttons.add(button)
     }
 
@@ -146,7 +128,7 @@ class KButton(
     var label: String? = null,
     var emoji: Emoji? = null,
     var disabled: Boolean = false,
-    val style: ButtonStyle
+    private val style: ButtonStyle
 ) : IButton {
     internal var action: ((ButtonClickEvent) -> Unit)? = null
 
