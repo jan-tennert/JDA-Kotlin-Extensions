@@ -20,6 +20,8 @@ abstract class Command(
     var autoRegister: Boolean = true
 ) : CommandData(name, description) {
 
+    open fun init() {}
+
     abstract fun run(
         channel: TextChannel?,
         member: Member?,
@@ -70,7 +72,7 @@ class ImplementedCommand {
         val ops = KOptions()
         ops.options()
         for (option in ops.options) {
-            command.addOption(option)
+            command.addOptions(option)
         }
     }
 
@@ -78,7 +80,7 @@ class ImplementedCommand {
         val subCommand = KSubCommands()
         subCommand.cmd()
         for (command in subCommand.commands) {
-            this.command.addSubcommand(command)
+            this.command.addSubcommands(command)
         }
     }
 
@@ -86,7 +88,7 @@ class ImplementedCommand {
         val subCommand = KSubCommandGroups()
         subCommand.cmd()
         for (command in subCommand.commands) {
-            this.command.addSubcommandGroup(command)
+            this.command.addSubcommandGroups(command)
         }
     }
 
@@ -116,12 +118,3 @@ class ImplementedCommand {
 
 }
 
-/**
- * Creates a new slash command through a type safe way.
- * name and description are required
- */
-fun createSlashCommand(command: ImplementedCommand.() -> Unit): Command {
-    val cmd = ImplementedCommand()
-    cmd.command()
-    return cmd.build()
-}

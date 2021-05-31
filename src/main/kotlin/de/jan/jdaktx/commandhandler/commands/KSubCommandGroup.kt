@@ -21,7 +21,7 @@ class KSubCommandGroup(var name: String, var description: String) {
         Checks.check(description.isNotBlank(), "A Subcommandgroup requires a description")
         val c = SubcommandGroupData(name, description)
         for (command in commands) {
-            c.addSubcommand(command)
+            c.addSubcommands(command)
         }
         return c
     }

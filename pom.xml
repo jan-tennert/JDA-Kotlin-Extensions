@@ -94,7 +94,7 @@
         <dependency>
             <groupId>com.github.jan-tennert</groupId>
             <artifactId>JDA</artifactId>
-            <version>feature~discord-together-v3.7.1-gf1c09ca-714</version>
+            <version>feature~discord-together-v3.7.1-g8406ebd-740</version>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>

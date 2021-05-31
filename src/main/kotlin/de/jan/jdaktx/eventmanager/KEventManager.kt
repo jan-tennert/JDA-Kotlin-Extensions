@@ -29,20 +29,23 @@ class KEventManager : IEventManager {
 
     override fun handle(e: GenericEvent) {
         GlobalScope.launch {
-            val iterator = listeners.iterator()
-            while (iterator.hasNext()) {
-                when (val next = iterator.next()) {
-                    is KEventListener -> {
-                        if (next.maxRuns == -1) {
-                            next.onEvent(e)
-                        } else if (next.maxRuns > 0) {
-                            if (next.onEvent(e)) {
-                                next.maxRuns--
+            try {
+                val iterator = listeners.iterator()
+                while (iterator.hasNext()) {
+                    when (val next = iterator.next()) {
+                        is KEventListener -> {
+                            if (next.maxRuns == -1) {
+                                next.onEvent(e)
+                            } else if (next.maxRuns > 0) {
+                                if (next.onEvent(e)) {
+                                    next.maxRuns--
+                                }
                             }
                         }
+                        is EventListener -> next.onEvent(e)
                     }
-                    is EventListener -> next.onEvent(e)
                 }
+            } catch (e: ConcurrentModificationException) {
             }
         }
     }
