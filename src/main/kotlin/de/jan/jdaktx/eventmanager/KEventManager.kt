@@ -54,14 +54,12 @@ inline fun <reified T : GenericEvent> JDA.on(
 ) {
     if (!this.hasKotlinExtensions) setupKotlinExtensions()
     val listener = object : KEventListener {
-        override suspend fun onEvent(e: GenericEvent): Boolean {
+        override suspend fun onEvent(e: GenericEvent) {
             if (e is T) {
                 if (predicate(e)) {
                     event.invoke(e)
-                    return true
                 }
             }
-            return false
         }
     }
     this.addEventListener(listener)
@@ -72,7 +70,7 @@ fun JDA.setupKotlinExtensions() {
 }
 
 interface KEventListener {
-    suspend fun onEvent(e: GenericEvent): Boolean
+    suspend fun onEvent(e: GenericEvent)
 }
 
 val JDA.hasKotlinExtensions: Boolean
