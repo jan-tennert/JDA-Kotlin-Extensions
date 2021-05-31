@@ -8,7 +8,8 @@ import net.dv8tion.jda.api.entities.PrivateChannel
 import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
-import net.dv8tion.jda.api.interactions.commands.CommandHook
+import net.dv8tion.jda.api.interactions.InteractionHook
+import net.dv8tion.jda.api.interactions.commands.OptionMapping
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.internal.utils.Checks
 
@@ -19,13 +20,15 @@ abstract class Command(
     var autoRegister: Boolean = true
 ) : CommandData(name, description) {
 
+    open fun init() {}
+
     abstract fun run(
         channel: TextChannel?,
         member: Member?,
         user: User,
         privateChannel: PrivateChannel?,
-        hook: CommandHook,
-        options: MutableList<SlashCommandEvent.OptionData>,
+        hook: InteractionHook,
+        options: MutableList<OptionMapping>,
         event: SlashCommandEvent
     )
 
@@ -69,7 +72,7 @@ class ImplementedCommand {
         val ops = KOptions()
         ops.options()
         for (option in ops.options) {
-            command.addOption(option)
+            command.addOptions(option)
         }
     }
 
@@ -77,7 +80,7 @@ class ImplementedCommand {
         val subCommand = KSubCommands()
         subCommand.cmd()
         for (command in subCommand.commands) {
-            this.command.addSubcommand(command)
+            this.command.addSubcommands(command)
         }
     }
 
@@ -85,7 +88,7 @@ class ImplementedCommand {
         val subCommand = KSubCommandGroups()
         subCommand.cmd()
         for (command in subCommand.commands) {
-            this.command.addSubcommandGroup(command)
+            this.command.addSubcommandGroups(command)
         }
     }
 
@@ -104,8 +107,8 @@ class ImplementedCommand {
             member: Member?,
             user: User,
             privateChannel: PrivateChannel?,
-            hook: CommandHook,
-            options: MutableList<SlashCommandEvent.OptionData>,
+            hook: InteractionHook,
+            options: MutableList<OptionMapping>,
             event: SlashCommandEvent
         ) {
             action?.invoke(event)
@@ -115,12 +118,3 @@ class ImplementedCommand {
 
 }
 
-/**
- * Creates a new slash command through a type safe way.
- * name and description are required
- */
-fun createSlashCommand(command: ImplementedCommand.() -> Unit): Command {
-    val cmd = ImplementedCommand()
-    cmd.command()
-    return cmd.build()
-}

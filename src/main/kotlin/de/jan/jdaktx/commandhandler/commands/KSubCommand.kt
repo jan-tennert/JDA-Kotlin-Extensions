@@ -40,7 +40,7 @@ class KSubCommand(name: String, description: String) {
                 realOption.addChoice(choice.first, choice.second.toString())
             }
         }
-        subCommand.addOption(realOption)
+        subCommand.addOptions(realOption)
     }
 
 }

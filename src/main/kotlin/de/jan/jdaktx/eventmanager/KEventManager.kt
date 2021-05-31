@@ -29,20 +29,15 @@ class KEventManager : IEventManager {
 
     override fun handle(e: GenericEvent) {
         GlobalScope.launch {
-            val iterator = listeners.iterator()
-            while (iterator.hasNext()) {
-                when (val next = iterator.next()) {
-                    is KEventListener -> {
-                        if (next.maxRuns == -1) {
-                            next.onEvent(e)
-                        } else if (next.maxRuns > 0) {
-                            if (next.onEvent(e)) {
-                                next.maxRuns--
-                            }
-                        }
+            try {
+                val iterator = listeners.iterator()
+                while (iterator.hasNext()) {
+                    when (val next = iterator.next()) {
+                        is KEventListener -> next.onEvent(e)
+                        is EventListener -> next.onEvent(e)
                     }
-                    is EventListener -> next.onEvent(e)
                 }
+            } catch (e: ConcurrentModificationException) {
             }
         }
     }
@@ -54,20 +49,17 @@ class KEventManager : IEventManager {
 }
 
 inline fun <reified T : GenericEvent> JDA.on(
-    maxRuns: Int = -1,
     crossinline predicate: (T) -> Boolean = { true },
     crossinline event: suspend (T) -> Unit
 ) {
     if (!this.hasKotlinExtensions) setupKotlinExtensions()
-    val listener = object : KEventListener(maxRuns) {
-        override suspend fun onEvent(e: GenericEvent): Boolean {
+    val listener = object : KEventListener {
+        override suspend fun onEvent(e: GenericEvent) {
             if (e is T) {
                 if (predicate(e)) {
                     event.invoke(e)
-                    return true
                 }
             }
-            return false
         }
     }
     this.addEventListener(listener)
@@ -77,8 +69,8 @@ fun JDA.setupKotlinExtensions() {
     this.setEventManager(KEventManager())
 }
 
-abstract class KEventListener(var maxRuns: Int) {
-    abstract suspend fun onEvent(e: GenericEvent): Boolean
+interface KEventListener {
+    suspend fun onEvent(e: GenericEvent)
 }
 
 val JDA.hasKotlinExtensions: Boolean

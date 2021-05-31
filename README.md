@@ -23,23 +23,24 @@ jda.awaitReady()
 commandHandler.registerCommands(testCommand())
 
 class testCommand : Command("hi", "Say hi to the bot") {
-      override fun run(
-            channel: TextChannel?,
-            member: Member?,
-            user: User,
-            privateChannel: PrivateChannel?,
-            hook: CommandHook,
-            options: MutableList<SlashCommandEvent.OptionData>,
-            event: SlashCommandEvent
-        ) {
-            event.reply("Hi, ${event.user.name}!").queue()
+    override fun run(
+        channel: TextChannel?,
+        member: Member?,
+        user: User,
+        privateChannel: PrivateChannel?,
+        hook: InteractionHook,
+        options: MutableList<OptionMapping>,
+        event: SlashCommandEvent
+    ) {
+        event.reply("Hi, ${event.user.name}!").queue()
 
-}
+    }
 
 
 //Or through a type safe builder:
-commandHandler.registerCommands(createSlashCommand {
-     name = "hi"
+    commandHandler.registerCommands(createSlashCommand
+    {
+        name = "hi"
      description = "Say hi to the bot"
      guildID = 631131922424135716
 
@@ -63,7 +64,6 @@ commandHandler.registerCommands(createSlashCommand {
 ```kotlin
 
 val jda = JDABuilder.createDefault("token")
-      .setEventManager(manager)
       .build()
 
 jda.on<GuildMessageReceivedEvent>() {
