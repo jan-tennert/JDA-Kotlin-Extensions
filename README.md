@@ -93,7 +93,14 @@ val message = MessageBuilder()
             //There are more buttons: danger, secondary, success (what just changes the color)
         }
     })
-//Then just send the message with message.build()
+//Then just send the message with message.build():
+
+val channel = ...
+channel.sendMessage(message.build()).queue()
+
+(SlashCommandEvent).reply(message.build()).queue()
+
+//etc...
 ```
 
 ### Create roles & guild channels in custom event manager
