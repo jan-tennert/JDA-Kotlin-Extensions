@@ -10,7 +10,7 @@ package is mainly for me but you can also contribute.
 
 - Event Manager with Coroutines
 - CommandHandler for SlashCommands
-- Type Safe Builder for slash commands, actions rows + buttons, creating a role, creating guild channels
+- Type Safe Builder for slash commands, actions rows + buttons, roles, guild channels
 - Music Handler
 
 # Installation
