@@ -77,8 +77,8 @@ val message = MessageBuilder()
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
             primary { //A primary button
-                this.id = "test" //Id for identifying your button in the ButtonClickEvent
-                this.label = "Test!"
+                id = "test" //Id for identifying your button in the ButtonClickEvent
+                label = "Test!"
 
                 action { e -> //This is ran when the button is clicked (only possibly if you passed the jda instance in the builder
                     e.reply("Hi!").queue()
@@ -87,7 +87,7 @@ val message = MessageBuilder()
 
             link { //An url button just open a url in the user's browser
                 url = "https://google.com"
-                this.label = "Click here to open Google"
+                label = "Click here to open Google"
             }
 
             //There are more buttons: danger, secondary, success (what just changes the color)
