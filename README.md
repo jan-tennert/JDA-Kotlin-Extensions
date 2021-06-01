@@ -73,9 +73,9 @@ You can add buttons easy with our type safe builder:
 
 ```kotlin
 val message = MessageBuilder()
-    .setActionRow(actionRowBuilder { //If you pass your jda instance in the builder, 
-        //you can listen to button clicks directly here in the builder as shown below 
+    .setActionRow(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
+
             primary { //A primary button
                 this.id = "test" //Id for identifying your button in the ButtonClickEvent
                 this.label = "Test!"
@@ -84,10 +84,12 @@ val message = MessageBuilder()
                     e.reply("Hi!").queue()
                 }
             }
+
             link { //An url button just open a url in the user's browser
                 url = "https://google.com"
                 this.label = "Click here to open Google"
             }
+
             //There are more buttons: danger, secondary, success (what just changes the color)
         }
     })
