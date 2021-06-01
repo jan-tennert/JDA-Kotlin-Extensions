@@ -73,7 +73,7 @@ You can add buttons easy with our type safe builder:
 
 ```kotlin
 val message = MessageBuilder()
-    .setActionRow(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+    .setActionRows(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
             primary { //A primary button
