@@ -1,8 +1,17 @@
 # JDA-Kotlin-Extensions
 
-JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-Safe Builders (for creating roles, text channels, embeds) and it has a built in SlashCommandHandler, Music Manager + Event Manager (with coroutines).
-This package is mainly for me but you can also contribute.
+JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-Safe Builders (for creating roles, text
+channels, embeds) and it has a built in SlashCommandHandler, Music Manager + Event Manager (with coroutines). This
+package is mainly for me but you can also contribute.
+
 + The Slash Commands will likely change because jda's slash commands are not done
+
+# Features
+
+- Event Manager with Coroutines
+- CommandHandler for SlashCommands
+- Type Safe Builder for slash commands, actions rows + buttons, creating a role, creating guild channels
+- Music Handler
 
 # Installation
 
@@ -33,18 +42,17 @@ class testCommand : Command("hi", "Say hi to the bot") {
         event: SlashCommandEvent
     ) {
         event.reply("Hi, ${event.user.name}!").queue()
-
     }
+```
 
+Or through a type safe builder:
 
-//Or through a type safe builder:
-    commandHandler.registerCommands(createSlashCommand
-    {
-        name = "hi"
-     description = "Say hi to the bot"
-     guildID = 631131922424135716
-
-     action {
+```kotlin
+commandHandler.registerCommands(createSlashCommand {
+    name = "hi"
+    description = "Say hi to the bot"
+    guildID = 631131922424135716
+    action {
         val embed = messageEmbed {
             title = "Title!!"
             footer = "footer"
@@ -55,8 +63,37 @@ class testCommand : Command("hi", "Say hi to the bot") {
             }
         }
         it.reply(embed).queue()
-     }
+    }
 })
+```
+
+### Buttons
+
+You can add buttons easy with our type safe builder:
+
+```kotlin
+val message = MessageBuilder()
+    .setActionRow(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+        row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
+
+            primary { //A primary button
+                this.id = "test" //Id for identifying your button in the ButtonClickEvent
+                this.label = "Test!"
+
+                action { e -> //This is ran when the button is clicked (only possibly if you passed the jda instance in the builder
+                    e.reply("Hi!").queue()
+                }
+            }
+
+            link { //An url button just open a url in the user's browser
+                url = "https://google.com"
+                this.label = "Click here to open Google"
+            }
+
+            //There are more buttons: danger, secondary, success (what just changes the color)
+        }
+    })
+//Then just send the message with message.build()
 ```
 
 ### Create roles & guild channels in custom event manager
@@ -64,39 +101,39 @@ class testCommand : Command("hi", "Say hi to the bot") {
 ```kotlin
 
 val jda = JDABuilder.createDefault("token")
-      .build()
+    .build()
 
 jda.on<GuildMessageReceivedEvent>() {
-     it.channel.sendMessage("Received Message!").queue()
-        
-     //Create channel:
-        
-     it.guild.createTextChannel("test") {
-            
+    it.channel.sendMessage("Received Message!").queue()
+
+    //Create channel:
+
+    it.guild.createTextChannel("test") {
+
         slowMode = 20
         topic = "Very cool text channel!"
-            
+
         addMemberPermission(523405005402) {
-             + Permission.MESSAGE_READ //allow permission
-             - Permission.MESSAGE_WRITE //deny permission
+            +Permission.MESSAGE_READ //allow permission
+            -Permission.MESSAGE_WRITE //deny permission
         }
-            
+
     }
-        
-     //Create role:
-        
-     it.guild.createRole { 
-            
-         name = "role"
-         color = Color.CYAN
-         mentionable = false
-            
-         permissions {  //Add permissions to the role
-             + Permission.KICK_MEMBERS
-             + Permission.BAN_MEMBERS
-         }
-            
-     }
+
+    //Create role:
+
+    it.guild.createRole {
+
+        name = "role"
+        color = Color.CYAN
+        mentionable = false
+
+        permissions {  //Add permissions to the role
+            +Permission.KICK_MEMBERS
+            +Permission.BAN_MEMBERS
+        }
+
+    }
 }
 
 ```
@@ -109,11 +146,11 @@ val guild = jda.getGuildById("guild")
 val voiceChannel = guild.getVoiceChannelById("id")
 
 voiceChannel.onMemberJoin {
-      println("Member join")
+    println("Member join")
 }
 
 guild.onMemberJoin {
-      println("new member joined")
+    println("new member joined")
 }
 
 ```
