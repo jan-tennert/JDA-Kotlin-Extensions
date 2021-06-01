@@ -12,6 +12,7 @@ class KOption(var name: String, var description: String, var type: OptionType, v
 
     fun choices(choices: KChoice.() -> Unit) {
         val choice = KChoice()
+        choice.choices()
         this.choices.addAll(choice.choices)
     }
 

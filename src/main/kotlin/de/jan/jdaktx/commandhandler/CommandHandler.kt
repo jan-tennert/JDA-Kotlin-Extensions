@@ -3,7 +3,7 @@ package de.jan.jdaktx.commandhandler
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
-import net.dv8tion.jda.api.requests.restaction.CommandUpdateAction
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction
 import net.dv8tion.jda.internal.utils.Checks
 
 class CommandHandler(val jda: JDA) : ListenerAdapter() {
@@ -43,11 +43,11 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
     }
 
     /**
-     * Register commands you created using [Command] or [createSlashCommand]
+     * Register commands you created using [Command] or the [createSlashCommand] method
      */
     fun registerCommands(vararg commands: Command) {
         val global = jda.updateCommands()
-        val guild = hashMapOf<Long, CommandUpdateAction>()
+        val guild = hashMapOf<Long, CommandListUpdateAction>()
         this.commands.addAll(commands)
         var index = 0
         for (command in commands) {
