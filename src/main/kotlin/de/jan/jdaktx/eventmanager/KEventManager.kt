@@ -1,6 +1,7 @@
 package de.jan.jdaktx.eventmanager
 
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.GenericEvent
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.hooks.IEventManager
 class KEventManager : IEventManager {
 
     private val listeners = mutableListOf<Any>()
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun register(e: Any) {
         if (e is EventListener || e is KEventListener) {
@@ -28,16 +30,14 @@ class KEventManager : IEventManager {
     }
 
     override fun handle(e: GenericEvent) {
-        GlobalScope.launch {
-            try {
-                val iterator = listeners.iterator()
-                while (iterator.hasNext()) {
-                    when (val next = iterator.next()) {
-                        is KEventListener -> next.onEvent(e)
-                        is EventListener -> next.onEvent(e)
-                    }
+        scope.launch {
+            val listenersCopy = listeners.toList()
+            val iterator = listenersCopy.iterator()
+            while (iterator.hasNext()) {
+                when (val next = iterator.next()) {
+                    is KEventListener -> next.onEvent(e)
+                    is EventListener -> next.onEvent(e)
                 }
-            } catch (e: ConcurrentModificationException) {
             }
         }
     }
