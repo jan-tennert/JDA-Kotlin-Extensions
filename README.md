@@ -10,7 +10,9 @@ package is mainly for me but you can also contribute.
 
 - Event Manager with Coroutines
 - CommandHandler for SlashCommands
-- Type Safe Builder for slash commands, actions rows + buttons, roles, guild channels
+- Type Safe Builder for [slash commands](https://github.com/jan-tennert/JDA-Kotlin-Extensions#slash-commands)
+  , [actions rows + buttons](https://github.com/jan-tennert/JDA-Kotlin-Extensions#buttons)
+  , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
 - Music Handler
 
 # ToDo
@@ -105,6 +107,33 @@ channel.sendMessage(message.build()).queue()
 (SlashCommandEvent).reply(message.build()).queue()
 
 //etc...
+```
+
+### Await Events
+
+With await events you can wait for events without adding a listener!
+
+```kotlin
+//to wait for an event you have to be in a suspension function but you can use (or another CoroutineScope)
+
+GlobalScope.launch {
+    val event = jda.awaitEvent<GuildMessageReceivedEvent>() { !it.author.isBot } //Add a predicate 
+    println(event.message.contentRaw)
+
+    //Or you can wait for a message directly in a channel
+    val channel = ...
+    val message = channel.awaitMessage() { it.author.id == myUserId }
+    println(message.contentRaw)
+
+    //You can also add a timeout, that makes the result nullable
+    val message = channel.awaitMessage(timeout = 2000) { it.author.id == myUserId }
+    if (message != null) {
+        println("Got message!")
+    } else {
+        println("Time is over!")
+    }
+}
+
 ```
 
 ### Create roles & guild channels in custom event manager
