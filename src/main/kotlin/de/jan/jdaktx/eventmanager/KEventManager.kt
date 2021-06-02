@@ -1,8 +1,6 @@
 package de.jan.jdaktx.eventmanager
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.hooks.EventListener
@@ -63,6 +61,30 @@ inline fun <reified T : GenericEvent> JDA.on(
         }
     }
     this.addEventListener(listener)
+}
+
+suspend inline fun <reified T : GenericEvent> JDA.awaitEvent(crossinline predicate: (T) -> Boolean = { true }) =
+    suspendCancellableCoroutine<T> {
+        if (!this.hasKotlinExtensions) setupKotlinExtensions()
+        val listener = object : KEventListener {
+            override suspend fun onEvent(e: GenericEvent) {
+                if (e is T && predicate(e)) {
+                    removeEventListener(this)
+                    it.resume(e) { error ->
+                        error.printStackTrace()
+                    }
+                }
+            }
+        }
+        this.addEventListener(listener)
+        it.invokeOnCancellation { removeEventListener(listener) }
+    }
+
+suspend inline fun <reified T : GenericEvent> JDA.awaitEvent(
+    timeoutInMilliseconds: Long,
+    crossinline predicate: (T) -> Boolean = { true }
+) = withTimeoutOrNull(timeoutInMilliseconds) {
+    awaitEvent(predicate)
 }
 
 fun JDA.setupKotlinExtensions() {
