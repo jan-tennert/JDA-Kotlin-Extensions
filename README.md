@@ -13,6 +13,10 @@ package is mainly for me but you can also contribute.
 - Type Safe Builder for slash commands, actions rows + buttons, roles, guild channels
 - Music Handler
 
+# ToDo
+
+- Await messages etc.
+
 # Installation
 
 Currently you can only install this dependency through jitpack: https://jitpack.io/#jan-tennert/JDA-Ktx/
