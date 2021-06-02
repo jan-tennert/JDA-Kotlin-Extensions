@@ -14,10 +14,11 @@ package is mainly for me but you can also contribute.
   , [actions rows + buttons](https://github.com/jan-tennert/JDA-Kotlin-Extensions#buttons)
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
 - Music Handler
+- [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
 
 # ToDo
 
-- Await messages etc.
+- ~~Await messages etc.~~ Done
 
 # Installation
 
