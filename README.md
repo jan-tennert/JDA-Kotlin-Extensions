@@ -10,8 +10,12 @@ package is mainly for me but you can also contribute.
 
 - Event Manager with Coroutines
 - CommandHandler for SlashCommands
-- Type Safe Builder for slash commands, actions rows + buttons, creating a role, creating guild channels
+- Type Safe Builder for slash commands, actions rows + buttons, roles, guild channels
 - Music Handler
+
+# ToDo
+
+- Await messages etc.
 
 # Installation
 
@@ -73,12 +77,12 @@ You can add buttons easy with our type safe builder:
 
 ```kotlin
 val message = MessageBuilder()
-    .setActionRow(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+    .setActionRows(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
             primary { //A primary button
-                this.id = "test" //Id for identifying your button in the ButtonClickEvent
-                this.label = "Test!"
+                id = "test" //Id for identifying your button in the ButtonClickEvent
+                label = "Test!"
 
                 action { e -> //This is ran when the button is clicked (only possibly if you passed the jda instance in the builder
                     e.reply("Hi!").queue()
@@ -87,13 +91,20 @@ val message = MessageBuilder()
 
             link { //An url button just open a url in the user's browser
                 url = "https://google.com"
-                this.label = "Click here to open Google"
+                label = "Click here to open Google"
             }
 
             //There are more buttons: danger, secondary, success (what just changes the color)
         }
     })
-//Then just send the message with message.build()
+//Then just send the message with message.build():
+
+val channel = ...
+channel.sendMessage(message.build()).queue()
+
+(SlashCommandEvent).reply(message.build()).queue()
+
+//etc...
 ```
 
 ### Create roles & guild channels in custom event manager
