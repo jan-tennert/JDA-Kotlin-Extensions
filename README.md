@@ -19,10 +19,11 @@ package is mainly for me but you can also contribute.
 # ToDo
 
 - ~~Await messages etc.~~ Done
+- Selection menus (not working on because it's under private beta, but if it's publicly available I'll start)
 
 # Installation
 
-Currently you can only install this dependency through jitpack: https://jitpack.io/#jan-tennert/JDA-Ktx/
+Currently, you can only install this dependency through jitpack: https://jitpack.io/#jan-tennert/JDA-Ktx/
 
 # Example:
 
