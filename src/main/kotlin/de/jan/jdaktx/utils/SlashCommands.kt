@@ -48,7 +48,7 @@ fun createSubCommand(cmd: KSubCommand.() -> Unit): SubcommandData {
     return subCommand.subCommand
 }
 
-fun subCommandGroup(cmd: KSubCommandGroup.() -> Unit): SubcommandGroupData {
+fun createSubCommandGroup(cmd: KSubCommandGroup.() -> Unit): SubcommandGroupData {
     val subCommandGroup = KSubCommandGroup("", "")
     subCommandGroup.cmd()
     Checks.check(subCommandGroup.name.isNotBlank(), "A sub command group requires a name")

@@ -100,12 +100,12 @@
         <dependency>
             <groupId>com.github.jan-tennert</groupId>
             <artifactId>JDA</artifactId>
-            <version>feature~slash-commands-v3.7.1-g20cf122-794</version>
+            <version>development-v3.7.1-ga5d9077-601</version>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.1_266</version>
+            <version>4.2.1_268</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
