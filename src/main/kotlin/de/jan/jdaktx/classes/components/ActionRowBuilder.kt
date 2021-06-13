@@ -5,9 +5,8 @@ import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
-import net.dv8tion.jda.api.interactions.components.Button
 import net.dv8tion.jda.api.interactions.components.ButtonStyle
-import net.dv8tion.jda.internal.utils.Checks
+import net.dv8tion.jda.api.interactions.components.Component
 
 class ActionRowBuilder(private val jda: JDA? = null) {
 
@@ -16,14 +15,14 @@ class ActionRowBuilder(private val jda: JDA? = null) {
     fun row(init: KActionRow.() -> Unit) {
         val row = KActionRow(jda)
         row.init()
-        rows.add(ActionRow.of(row.buttons.map { it.toButton() }))
+        rows.add(ActionRow.of(row.components.map { it.toComponent() }))
     }
 
 }
 
 class KActionRow(private val jda: JDA?) {
 
-    internal val buttons = mutableListOf<IButton>()
+    internal val components = mutableListOf<IComponent>()
 
     fun primary(
         id: String? = null,
@@ -70,7 +69,23 @@ class KActionRow(private val jda: JDA?) {
         if (label != null) button.label = label
         if (emoji != null) button.emoji = emoji
         if (disabled != button.disabled) button.disabled = disabled
-        buttons.add(button)
+        components.add(button)
+    }
+
+    fun selectionMenu(
+        id: String? = null,
+        minValues: Int = 1,
+        maxValues: Int = 1,
+        placeHolder: String? = null,
+        init: KSelectionMenu.() -> Unit
+    ) {
+        val menu = KSelectionMenu(id, minValues, maxValues, placeHolder)
+        menu.init()
+        if (id != null) menu.id = id
+        if (placeHolder != null) menu.placeHolder = placeHolder
+        if (minValues != 1) menu.minValues = minValues
+        if (maxValues != 1) menu.maxValues = maxValues
+        components.add(menu)
     }
 
     private fun actionButton(
@@ -88,8 +103,10 @@ class KActionRow(private val jda: JDA?) {
         if (emoji != null) button.emoji = emoji
         if (disabled != button.disabled) button.disabled = disabled
         addButtonListener(button)
-        buttons.add(button)
+        components.add(button)
     }
+
+    private fun addSelectionMenuListener(): Nothing = TODO()
 
     private fun addButtonListener(button: KButton) {
         if (button.action != null) {
@@ -101,52 +118,10 @@ class KActionRow(private val jda: JDA?) {
 
 }
 
-interface IButton {
-    fun toButton(): Button
+interface IComponent {
+    fun toComponent(): Component
 }
 
-class KLinkButton(
-    var label: String? = null,
-    var url: String? = null,
-    var emoji: Emoji? = null,
-    var disabled: Boolean = false
-) : IButton {
-    override fun toButton(): Button {
-        Checks.notNull(url, "Button URL")
-        if (label == null && emoji == null) throw IllegalArgumentException("You must specify a label or an emoji (or both)")
-        var realButton: Button? = null
-        if (label != null && emoji != null) realButton =
-            Button.link(url!!, label!!).withEmoji(emoji!!).withDisabled(disabled)
-        if (label != null && emoji == null) realButton = Button.link(url!!, label!!).withDisabled(disabled)
-        if (label == null && emoji != null) realButton = Button.link(url!!, emoji!!).withDisabled(disabled)
-        return realButton!!
-    }
-}
-
-class KButton(
-    var id: String? = null,
-    var label: String? = null,
-    var emoji: Emoji? = null,
-    var disabled: Boolean = false,
-    private val style: ButtonStyle
-) : IButton {
-    internal var action: ((ButtonClickEvent) -> Unit)? = null
-
-    fun action(action: (ButtonClickEvent) -> Unit) {
-        this.action = action
-    }
-
-    override fun toButton(): Button {
-        Checks.notNull(id, "Button ID")
-        if (label == null && emoji == null) throw IllegalArgumentException("You must specify a label or an emoji (or both)")
-        var realButton: Button? = null
-        if (label != null && emoji != null) realButton =
-            Button.of(style, id!!, label!!).withEmoji(emoji!!).withDisabled(disabled)
-        if (label != null && emoji == null) realButton = Button.of(style, id!!, label!!).withDisabled(disabled)
-        if (label == null && emoji != null) realButton = Button.of(style, id!!, emoji!!).withDisabled(disabled)
-        return realButton!!
-    }
-}
 
 fun actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): List<ActionRow> {
     val row = ActionRowBuilder(jda)
