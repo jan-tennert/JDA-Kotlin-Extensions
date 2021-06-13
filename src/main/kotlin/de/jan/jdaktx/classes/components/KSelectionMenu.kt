@@ -16,6 +16,16 @@ class KSelectOptions {
         Checks.notNull(option.value, "SelectOption Value")
         options.add(SelectOption(option.label!!, option.value!!, option.description, option.isDefault, option.emoji))
     }
+
+    fun SelectOption.plus() {
+        options.add(this)
+    }
+
+    fun KSelectOption.plus() {
+        Checks.notNull(this.label, "SelectOption Label")
+        Checks.notNull(this.value, "SelectOption Value")
+        options.add(SelectOption(this.label!!, this.value!!, this.description, this.isDefault, this.emoji))
+    }
 }
 
 data class KSelectOption(
