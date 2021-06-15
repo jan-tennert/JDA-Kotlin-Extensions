@@ -4,7 +4,8 @@ JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-S
 channels, embeds) and it has a built in SlashCommandHandler, Music Manager + Event Manager (with coroutines). This
 package is mainly for me but you can also contribute.
 
-+ The Slash Commands will likely change because jda's slash commands are not done
++ ~~The Slash Commands will likely change because jda's slash commands are not done~~
+**If you have ideas, bugs or simply a question please feel free to create an issue!**
 
 # Features
 
