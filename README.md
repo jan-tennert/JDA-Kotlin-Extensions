@@ -13,7 +13,7 @@ package is mainly for me but you can also contribute.
 - Type Safe Builder for [slash commands](https://github.com/jan-tennert/JDA-Kotlin-Extensions#slash-commands)
   , [actions rows + buttons](https://github.com/jan-tennert/JDA-Kotlin-Extensions#buttons)
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
-- Music Handler
+- Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
 
 # ToDo
