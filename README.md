@@ -105,7 +105,7 @@ val message = MessageBuilder()
 //Or through message action:
 
 channel.sendMessage("Please select an option")
-  .setActionRows(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+    .setActionRows(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
             primary { //A primary button
@@ -125,7 +125,7 @@ channel.sendMessage("Please select an option")
             //There are more buttons: danger, secondary, success (what just changes the color)
         }
     })
-  .build()
+  .queue()
 
 //Then just send the message with message.build():
 
