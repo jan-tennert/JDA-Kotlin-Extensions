@@ -2,11 +2,13 @@ package de.jan.jdaktx.classes.components
 
 import de.jan.jdaktx.eventmanager.on
 import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.MessageBuilder
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.Button
 import net.dv8tion.jda.api.interactions.components.ButtonStyle
+import net.dv8tion.jda.api.requests.restaction.MessageAction
 import net.dv8tion.jda.internal.utils.Checks
 
 class ActionRowBuilder(private val jda: JDA? = null) {
@@ -152,4 +154,18 @@ fun actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): List<
     val row = ActionRowBuilder(jda)
     row.init()
     return row.rows.toList()
+}
+
+fun MessageAction.actionRowBuilder(init: ActionRowBuilder.() -> Unit): MessageAction {
+    val builder = ActionRowBuilder(jda)
+    builder.init()
+    setActionRows(builder.rows)
+    return this
+}
+
+fun MessageBuilder.actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): MessageBuilder {
+    val builder = ActionRowBuilder(jda)
+    builder.init()
+    setActionRows(builder.rows)
+    return this
 }
