@@ -31,7 +31,7 @@ Currently, you can only install this dependency through jitpack: https://jitpack
 
 ```kotlin
 val jda = JDABuilder.createDefault("token").build()
-val commandHandler = CommandHandler(jda)
+val commandHandler = jda.createCommandHandler()
 
 jda.awaitReady()
 
