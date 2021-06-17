@@ -81,7 +81,7 @@ You can add buttons easy with our type safe builder:
 
 ```kotlin
 val message = MessageBuilder()
-    .setActionRows(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+    .actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
             primary { //A primary button
@@ -105,7 +105,7 @@ val message = MessageBuilder()
 //Or through message action:
 
 channel.sendMessage("Please select an option")
-    .setActionRows(actionRowBuilder(jda) {  
+    .actionRowBuilder {  //Here you don't need the jda instance because MessageAction already has it.
         row { 
 
             primary { 
