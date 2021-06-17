@@ -15,6 +15,9 @@ class KButton(
 ) : IComponent {
     internal var action: ((ButtonClickEvent) -> Unit)? = null
 
+    /**
+     * Your lambda will be run when a user clicks on the button (if you specified jda on the [actionRowBuilder])
+     */
     fun action(action: (ButtonClickEvent) -> Unit) {
         this.action = action
     }
@@ -29,4 +32,9 @@ class KButton(
         if (label == null && emoji != null) realButton = Button.of(style, id!!, emoji!!).withDisabled(disabled)
         return realButton!!
     }
+
+    override fun toString(): String {
+        return "KButton(id=$id, label=$label, emoji=$emoji, disabled=$disabled, style=$style)"
+    }
+
 }

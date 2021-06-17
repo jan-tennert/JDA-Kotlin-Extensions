@@ -1,6 +1,7 @@
 package de.jan.jdaktx.classes.components
 
 import net.dv8tion.jda.api.entities.Emoji
+import net.dv8tion.jda.api.events.interaction.SelectionMenuEvent
 import net.dv8tion.jda.api.interactions.components.Component
 import net.dv8tion.jda.api.interactions.components.selections.SelectOption
 import net.dv8tion.jda.api.interactions.components.selections.SelectionMenu
@@ -44,6 +45,8 @@ class KSelectionMenu(
 ) : IComponent {
 
     private val options = mutableListOf<SelectOption>()
+    internal var action: ((SelectionMenuEvent) -> Unit)? = null
+
     var range: Pair<Int, Int> = Pair(minValues, maxValues)
         get() {
             return Pair(minValues, maxValues)
@@ -51,13 +54,20 @@ class KSelectionMenu(
         set(value) {
             field = value
             minValues = value.first
-            minValues = value.second
+            maxValues = value.second
         }
 
     fun options(init: KSelectOptions.() -> Unit) {
         val menu = KSelectOptions()
         menu.init()
         options.addAll(menu.options)
+    }
+
+    /**
+     * Your lambda is run when the user has selected between [minValues] and [maxValues] options and closes the selection menu
+     */
+    fun action(init: (SelectionMenuEvent) -> Unit) {
+        action = init
     }
 
     override fun toComponent(): Component {
@@ -67,5 +77,20 @@ class KSelectionMenu(
             .addOptions(options)
             .setRequiredRange(range.first, range.second)
             .build()
+    }
+
+    override fun toString(): String {
+        return "KSelectionMenu(id=$id, minValues=$minValues, maxValues=$maxValues, placeHolder=$placeHolder)"
+    }
+
+}
+
+fun main() {
+    actionRowBuilder {
+        row {
+            selectionMenu {
+                this.id
+            }
+        }
     }
 }

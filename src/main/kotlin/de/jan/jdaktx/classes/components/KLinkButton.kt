@@ -20,4 +20,9 @@ class KLinkButton(
         if (label == null && emoji != null) realButton = Button.link(url!!, emoji!!).withDisabled(disabled)
         return realButton!!
     }
+
+    override fun toString(): String {
+        return "KLinkButton(label=$label, url=$url, emoji=$emoji, disabled=$disabled)"
+    }
+
 }

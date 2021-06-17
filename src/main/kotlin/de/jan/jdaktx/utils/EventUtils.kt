@@ -2,7 +2,9 @@ package de.jan.jdaktx.utils
 
 import de.jan.jdaktx.classes.utils.KPresence
 import de.jan.jdaktx.eventmanager.on
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.*
+import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.events.channel.category.CategoryDeleteEvent
 import net.dv8tion.jda.api.events.channel.text.TextChannelDeleteEvent
 import net.dv8tion.jda.api.events.channel.voice.VoiceChannelDeleteEvent
@@ -155,4 +157,8 @@ fun Guild.onMemberLeave(onLeave: suspend (GuildMemberRemoveEvent) -> Unit) {
 fun Presence.changeActivity(presence: KPresence.() -> Unit) {
     val p = KPresence(this)
     p.presence()
+}
+
+fun <T : GenericEvent> JDA.fireEvent(event: T) {
+    eventManager.handle(event)
 }

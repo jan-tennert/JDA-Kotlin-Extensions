@@ -4,6 +4,7 @@ import de.jan.jdaktx.eventmanager.on
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Emoji
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent
+import net.dv8tion.jda.api.events.interaction.SelectionMenuEvent
 import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.ButtonStyle
 import net.dv8tion.jda.api.interactions.components.Component
@@ -24,7 +25,10 @@ class KActionRow(private val jda: JDA?) {
 
     internal val components = mutableListOf<IComponent>()
 
-    fun primary(
+    /**
+     * Creates a blue button
+     */
+    fun primaryButton(
         id: String? = null,
         label: String? = null,
         emoji: Emoji? = null,
@@ -32,7 +36,10 @@ class KActionRow(private val jda: JDA?) {
         init: KButton.() -> Unit
     ) = actionButton(id, label, emoji, disabled, ButtonStyle.PRIMARY, init)
 
-    fun secondary(
+    /**
+     * Creates a grey button
+     */
+    fun secondaryButton(
         id: String? = null,
         label: String? = null,
         emoji: Emoji? = null,
@@ -40,7 +47,10 @@ class KActionRow(private val jda: JDA?) {
         init: KButton.() -> Unit
     ) = actionButton(id, label, emoji, disabled, ButtonStyle.SECONDARY, init)
 
-    fun danger(
+    /**
+     * Creates a red button
+     */
+    fun dangerButton(
         id: String? = null,
         label: String? = null,
         emoji: Emoji? = null,
@@ -48,7 +58,10 @@ class KActionRow(private val jda: JDA?) {
         init: KButton.() -> Unit
     ) = actionButton(id, label, emoji, disabled, ButtonStyle.DANGER, init)
 
-    fun success(
+    /**
+     * Creates a green button
+     */
+    fun successButton(
         id: String? = null,
         label: String? = null,
         emoji: Emoji? = null,
@@ -56,19 +69,18 @@ class KActionRow(private val jda: JDA?) {
         init: KButton.() -> Unit
     ) = actionButton(id, label, emoji, disabled, ButtonStyle.SUCCESS, init)
 
-    fun link(
+    /**
+     * Creates a link button
+     */
+    fun linkButton(
         url: String? = null,
         label: String? = null,
         emoji: Emoji? = null,
         disabled: Boolean = false,
         init: KLinkButton.() -> Unit
     ) {
-        val button = KLinkButton(url, label, emoji)
+        val button = KLinkButton(url, label, emoji, disabled)
         button.init()
-        if (url != null) button.url = url
-        if (label != null) button.label = label
-        if (emoji != null) button.emoji = emoji
-        if (disabled != button.disabled) button.disabled = disabled
         components.add(button)
     }
 
@@ -81,10 +93,7 @@ class KActionRow(private val jda: JDA?) {
     ) {
         val menu = KSelectionMenu(id, minValues, maxValues, placeHolder)
         menu.init()
-        if (id != null) menu.id = id
-        if (placeHolder != null) menu.placeHolder = placeHolder
-        if (minValues != 1) menu.minValues = minValues
-        if (maxValues != 1) menu.maxValues = maxValues
+        addSelectionMenuListener(menu)
         components.add(menu)
     }
 
@@ -98,15 +107,17 @@ class KActionRow(private val jda: JDA?) {
     ) {
         val button = KButton(id, label, emoji, disabled, style)
         button.init()
-        if (id != null) button.id = id
-        if (label != null) button.label = label
-        if (emoji != null) button.emoji = emoji
-        if (disabled != button.disabled) button.disabled = disabled
         addButtonListener(button)
         components.add(button)
     }
 
-    private fun addSelectionMenuListener(): Nothing = TODO()
+    private fun addSelectionMenuListener(selectionMenu: KSelectionMenu) {
+        if (selectionMenu.action != null) {
+            jda?.on<SelectionMenuEvent>(predicate = { it.componentId == selectionMenu.id }) {
+                selectionMenu.action!!.invoke(it)
+            }
+        }
+    }
 
     private fun addButtonListener(button: KButton) {
         if (button.action != null) {
@@ -127,4 +138,16 @@ fun actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): List<
     val row = ActionRowBuilder(jda)
     row.init()
     return row.rows.toList()
+}
+
+fun main() {
+    val t = actionRowBuilder {
+        row {
+            selectionMenu {
+                action {
+
+                }
+            }
+        }
+    }
 }
