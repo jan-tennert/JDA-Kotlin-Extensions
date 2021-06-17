@@ -139,15 +139,3 @@ fun actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): List<
     row.init()
     return row.rows.toList()
 }
-
-fun main() {
-    val t = actionRowBuilder {
-        row {
-            selectionMenu {
-                action {
-
-                }
-            }
-        }
-    }
-}
