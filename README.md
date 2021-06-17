@@ -20,7 +20,7 @@ package is mainly for me but you can also contribute.
 
 - ~~Await messages etc.~~ Done
 - Selection menus (not working on because it's under private beta, but if it's publicly available I'll start)
-- Builder for Stage Channels and Threads
+- Builder for Stage Channels (?) and Threads
 
 # Installation
 
