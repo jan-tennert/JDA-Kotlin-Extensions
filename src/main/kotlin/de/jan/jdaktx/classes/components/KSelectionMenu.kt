@@ -10,8 +10,15 @@ import net.dv8tion.jda.internal.utils.Checks
 class KSelectOptions {
     internal val options = mutableListOf<SelectOption>()
 
-    fun option(init: KSelectOption.() -> Unit) {
-        val option = KSelectOption()
+    fun option(
+        label: String? = null,
+        description: String? = null,
+        value: String? = null,
+        isDefault: Boolean = false,
+        emoji: Emoji? = null,
+        init: KSelectOption.() -> Unit
+    ) {
+        val option = KSelectOption(label, description, value, isDefault, emoji)
         option.init()
         Checks.notNull(option.label, "SelectOption Label")
         Checks.notNull(option.value, "SelectOption Value")
