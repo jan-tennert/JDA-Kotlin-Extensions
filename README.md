@@ -160,25 +160,10 @@ channel.sendMessage()
             minValues = 1
             maxValues = 3
             options {
-              option {
-                label = "Java"
-                isDefault = true
-                value = "java"
-              }
-              option {
-                label = "Python"
-                value = "python"
-              }
-              option {
-                label = "Kotlin"
-                isDefault = true
-                value = "kotlin"
-              }
-              option {
-                label = "C#"
-                isDefault = true
-                value = "csharp"
-              }
+              option(label = "Java", isDefault = true, value = "java")
+              option(label = "Python", value = "python")
+              option(label = "Kotlin", value = "kotlin")
+              option(label = "C#", value = "csharp")
             }
 
             action {
