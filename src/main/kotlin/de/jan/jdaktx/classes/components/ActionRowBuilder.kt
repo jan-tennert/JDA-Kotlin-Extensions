@@ -155,3 +155,42 @@ fun MessageBuilder.actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() 
     setActionRows(builder.rows)
     return this
 }
+
+fun test() {
+    actionRowBuilder {
+        row {
+            selectionMenu {
+                id = "programming_languages"
+                placeHolder = "Select your favourite Programming Languages"
+                minValues = 1
+                maxValues = 3
+                options {
+                    option {
+                        label = "Java"
+                        isDefault = true
+                        value = "java"
+                    }
+                    option {
+                        label = "Python"
+                        value = "python"
+                    }
+                    option {
+                        label = "Kotlin"
+                        isDefault = true
+                        value = "kotlin"
+                    }
+                    option {
+                        label = "C#"
+                        isDefault = true
+                        value = "csharp"
+                    }
+                }
+
+                action {
+                    val selectedLanguages = it.component!!.options
+                    it.reply("Selected Languages: ${selectedLanguages.joinToString()}").queue()
+                }
+            }
+        }
+    }
+}
