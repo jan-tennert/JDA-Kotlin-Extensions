@@ -97,3 +97,4 @@ interface KEventListener {
 
 val JDA.hasKotlinExtensions: Boolean
     get() = eventManager is KEventManager
+
