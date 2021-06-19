@@ -4,7 +4,7 @@ JDA-Ktx is a package for Discord.JDA which uses Kotlin-Only features like Type-S
 channels, embeds) and it has a built in SlashCommandHandler, Music Manager + Event Manager (with coroutines). This
 package is mainly for me but you can also contribute.
 
-+ The Slash Commands will likely change because jda's slash commands are not done
+**If you have ideas, bugs or simply a question please feel free to create an issue!**
 
 # Features
 
@@ -13,13 +13,14 @@ package is mainly for me but you can also contribute.
 - Type Safe Builder for [slash commands](https://github.com/jan-tennert/JDA-Kotlin-Extensions#slash-commands)
   , [actions rows + buttons](https://github.com/jan-tennert/JDA-Kotlin-Extensions#buttons)
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
-- Music Handler
+- Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
 
 # ToDo
 
 - ~~Await messages etc.~~ Done
 - Selection menus (not working on because it's under private beta, but if it's publicly available I'll start)
+- Builder for Stage Channels (?) and Threads
 
 # Installation
 
@@ -31,7 +32,7 @@ Currently, you can only install this dependency through jitpack: https://jitpack
 
 ```kotlin
 val jda = JDABuilder.createDefault("token").build()
-val commandHandler = CommandHandler(jda)
+val commandHandler = jda.createCommandHandler()
 
 jda.awaitReady()
 
@@ -81,7 +82,7 @@ You can add buttons easy with our type safe builder:
 
 ```kotlin
 val message = MessageBuilder()
-    .setActionRows(actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+    .actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
         row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
             primary { //A primary button
@@ -101,6 +102,30 @@ val message = MessageBuilder()
             //There are more buttons: danger, secondary, success (what just changes the color)
         }
     })
+
+//Or through message action:
+
+channel.sendMessage("Please select an option")
+    .actionRowBuilder {  //Here you don't need the jda instance because MessageAction already has it.
+        row { 
+
+            primary { 
+                id = "test" 
+                label = "Test!"
+
+                action { e -> 
+                    e.reply("Hi!").queue()
+                }
+            }
+
+            link { 
+                url = "https://google.com"
+                label = "Click here to open Google"
+            }
+        }
+    })
+  .queue()
+
 //Then just send the message with message.build():
 
 val channel = ...

@@ -71,3 +71,7 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
         }
     }
 }
+
+fun JDA.createCommandHandler(): CommandHandler {
+    return CommandHandler(this)
+}
