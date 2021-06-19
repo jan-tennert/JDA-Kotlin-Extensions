@@ -188,7 +188,7 @@ fun test() {
 
                 action {
                     val selectedLanguages = it.component!!.options
-                    it.reply("Selected Languages: ${selectedLanguages.joinToString()}").queue()
+                    it.reply("Selected Languages: ${selectedLanguages.joinToString() { v -> v.label }}").queue()
                 }
             }
         }

@@ -82,26 +82,26 @@ You can add buttons easy with our type safe builder:
 
 ```kotlin
 val message = MessageBuilder()
-    .actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
-      row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
+  .actionRowBuilder(jda) { //If you pass your jda instance in the builder, you can listen to button clicks directly here in the builder as shown below 
+    row { //You can have multiple rows so if you want the buttons in different rows then just add more row {}
 
-        primaryButton { //A primary button
-          id = "test" //Id for identifying your button in the ButtonClickEvent
-                label = "Test!"
+      primaryButton { //A primary button
+        id = "test" //Id for identifying your button in the ButtonClickEvent
+        label = "Test!"
 
-                action { e -> //This is ran when the button is clicked (only possibly if you passed the jda instance in the builder
-                    e.reply("Hi!").queue()
-                }
+        action { e -> //This is ran when the button is clicked (only possibly if you passed the jda instance in the builder
+          e.reply("Hi!").queue()
         }
-
-        linkButton { //An url button just open a url in the user's browser
-          url = "https://google.com"
-                label = "Click here to open Google"
-            }
-
-        //There are more buttons: danger, secondary, success (what just changes the color)
       }
-    })
+
+      linkButton { //An url button just open a url in the user's browser
+        url = "https://google.com"
+        label = "Click here to open Google"
+      }
+
+      //There are more buttons: danger, secondary, success (what just changes the color)
+    }
+  })
 
 //Or through message action:
 
@@ -121,8 +121,8 @@ channel.sendMessage("Please select an option")
       linkButton {
         url = "https://google.com"
         label = "Click here to open Google"
-            }
-        }
+      }
+    }
   })
 .queue()
 
@@ -183,7 +183,7 @@ channel.sendMessage()
 
             action {
               val selectedLanguages = it.component!!.options
-              it.reply("Selected Languages: ${selectedLanguages.joinToString()}").queue()
+              it.reply("Selected Languages: ${selectedLanguages.joinToString() { v -> v.label }}").queue()
             }
           }
         }
@@ -201,7 +201,7 @@ With await events you can wait for events without adding a listener!
 
 GlobalScope.launch {
   val event = jda.awaitEvent<GuildMessageReceivedEvent>() { !it.author.isBot } //Add a predicate 
-    println(event.message.contentRaw)
+  println(event.message.contentRaw)
 
     //Or you can wait for a message directly in a channel
     val channel = ...
