@@ -21,6 +21,7 @@ package is mainly for me, but you can also contribute.
 - ~~Await messages etc.~~ Done
 - Finish Selection menus
 - Builder for Stage Channels (?) and Threads
+- Find a solution for not updating the commands on every startup
 
 # Installation
 
