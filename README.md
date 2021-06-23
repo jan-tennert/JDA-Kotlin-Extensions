@@ -15,7 +15,7 @@ package is mainly for me, but you can also contribute.
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
 - Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
-- [Music Manager]()
+- [Music Manager](https://github.com/jan-tennert/JDA-Kotlin-Extensions#music)
 
 # ToDo
 
