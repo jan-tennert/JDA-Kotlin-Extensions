@@ -21,6 +21,7 @@ package is mainly for me, but you can also contribute.
 - ~~Await messages etc.~~ Done
 - Finish Selection menus
 - Builder for Stage Channels (?) and Threads
+- Find a solution for not updating the commands on every startup
 
 # Installation
 
@@ -152,26 +153,22 @@ channel.sendMessage()
       }
     }
     row {
-      actionRowBuilder {
-        row {
-          selectionMenu {
-            id = "programming_languages"
-            placeHolder = "Select your favourite Programming Languages"
-            minValues = 1
-            maxValues = 3
-            options {
-              option(label = "Java", isDefault = true, value = "java")
-              option(label = "Python", value = "python")
-              option(label = "Kotlin", value = "kotlin")
-              option(label = "C#", value = "csharp")
-            }
+       selectionMenu {
+         id = "programming_languages"
+         placeHolder = "Select your favourite Programming Languages"
+         minValues = 1
+         maxValues = 3
+         options {
+           option(label = "Java", isDefault = true, value = "java")
+           option(label = "Python", value = "python")
+           option(label = "Kotlin", value = "kotlin")
+           option(label = "C#", value = "csharp")
+         }
 
-            action {
-              val selectedLanguages = it.component!!.options
-              it.reply("Selected Languages: ${selectedLanguages.joinToString() { v -> v.label }}").queue()
-            }
-          }
-        }
+         action {
+           val selectedLanguages = it.component!!.options
+           it.reply("Selected Languages: ${selectedLanguages.joinToString() { v -> v.label }}").queue()
+         }
       }
     }
   }
