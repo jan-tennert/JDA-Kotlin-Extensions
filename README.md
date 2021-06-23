@@ -42,7 +42,7 @@ jda.awaitReady()
 commandHandler.registerCommands(testCommand())
 
 class testCommand : Command("hi", "Say hi to the bot") {
-    override fun run(
+    override suspend fun run(
         channel: TextChannel?,
         member: Member?,
         user: User,
@@ -179,24 +179,22 @@ channel.sendMessage()
 With await events you can wait for events without adding a listener!
 
 ```kotlin
-//to wait for an event you have to be in a suspension function but you can use (or another CoroutineScope)
+//to wait for an event you have to be in a suspension function. If you use my SlashCommands, you should be able to use it without any scope! But if you don't use GlobalScope.launch {}
 
-GlobalScope.launch {
-  val event = jda.awaitEvent<GuildMessageReceivedEvent>() { !it.author.isBot } //Add a predicate 
-  println(event.message.contentRaw)
+val event = jda.awaitEvent<GuildMessageReceivedEvent>() { !it.author.isBot } //Add a predicate 
+println(event.message.contentRaw)
 
-    //Or you can wait for a message directly in a channel
-    val channel = ...
-    val message = channel.awaitMessage() { it.author.id == myUserId }
-    println(message.contentRaw)
+//Or you can wait for a message directly in a channel
+val channel = ...
+val message = channel.awaitMessage() { it.author.id == myUserId }
+println(message.contentRaw)
 
-    //You can also add a timeout, that makes the result nullable
-    val message = channel.awaitMessage(timeout = 2000) { it.author.id == myUserId }
-    if (message != null) {
-        println("Got message!")
-    } else {
-        println("Time is over!")
-    }
+//You can also add a timeout, that makes the result nullable
+val message = channel.awaitMessage(timeout = 2000) { it.author.id == myUserId }
+if (message != null) {
+    println("Got message!")
+} else {
+    println("Time is over!")
 }
 
 ```
