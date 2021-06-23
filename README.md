@@ -15,6 +15,7 @@ package is mainly for me, but you can also contribute.
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
 - Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
+- [Music Manager]()
 
 # ToDo
 
@@ -172,6 +173,31 @@ channel.sendMessage()
       }
     }
   }
+```
+
+### Music
+
+You can really easy play yt videos, twitch streams, soundcloud etc.
+
+```kotlin
+val voiceChannel = ...
+
+voiceChannel.play("https://www.youtube.com/watch?v=dQw4w9WgXcQ") //This is it and you can queue them by just reuse the play method
+
+val guild = ...
+val musicManager = guild.musicManager
+
+//To skip, stop etc use the musicManager above you can just skip like that:
+musicManager.skip()
+```
+
+You can also listen to events
+
+```kotlin
+val jda = ...
+jda.on<AudioTrackPlayEvent>() {
+    //do stuff
+}
 ```
 
 ### Await Events
