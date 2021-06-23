@@ -4,6 +4,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.TextChannel
+import net.dv8tion.jda.api.entities.VoiceChannel
 import java.util.concurrent.LinkedBlockingQueue
 
 class GuildMusicManager(manager: AudioPlayerManager, val guild: Guild) {
@@ -51,6 +53,11 @@ class GuildMusicManager(manager: AudioPlayerManager, val guild: Guild) {
             if (playingTrack != null) return playingTrack!!.duration - playingTrack!!.position
             return 0L
         }
+    val currentlyPlayingIn: VoiceChannel?
+        get() {
+            return guild.audioManager.connectedChannel
+        }
+    internal var queueTextChannel: TextChannel? = null
 
     fun pause() {
         player.isPaused = true

@@ -22,7 +22,7 @@ abstract class Command(
 
     open fun init() {}
 
-    abstract fun run(
+    abstract suspend fun run(
         channel: TextChannel?,
         member: Member?,
         user: User,
@@ -37,7 +37,7 @@ abstract class Command(
 class ImplementedCommand {
 
     private val command = KCommand()
-    private var action: ((SlashCommandEvent) -> Unit)? = null
+    private var action: SlashCommandRun? = null
         set(value) {
             field = value
             command.action = value
@@ -64,7 +64,7 @@ class ImplementedCommand {
         }
 
 
-    fun action(action: (SlashCommandEvent) -> Unit) {
+    fun action(action: SlashCommandRun) {
         this.action = action
     }
 
@@ -100,9 +100,9 @@ class ImplementedCommand {
 
     private class KCommand : Command("empty", "empty") {
 
-        var action: ((SlashCommandEvent) -> Unit)? = null
+        var action: SlashCommandRun? = null
 
-        override fun run(
+        override suspend fun run(
             channel: TextChannel?,
             member: Member?,
             user: User,
@@ -111,10 +111,13 @@ class ImplementedCommand {
             options: MutableList<OptionMapping>,
             event: SlashCommandEvent
         ) {
-            action?.invoke(event)
+            action?.handle(event)
         }
 
     }
 
 }
 
+fun interface SlashCommandRun {
+    suspend fun handle(event: SlashCommandEvent)
+}

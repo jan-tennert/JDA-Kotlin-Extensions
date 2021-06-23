@@ -2,6 +2,7 @@ package de.jan.jdaktx.utils
 
 import de.jan.jdaktx.classes.utils.KPresence
 import de.jan.jdaktx.eventmanager.on
+import kotlinx.coroutines.suspendCancellableCoroutine
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.*
 import net.dv8tion.jda.api.events.GenericEvent
@@ -17,6 +18,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent
 import net.dv8tion.jda.api.managers.Presence
+import net.dv8tion.jda.api.requests.RestAction
 
 /**
  * Called when a reaction is added to the message
@@ -161,4 +163,8 @@ fun Presence.changeActivity(presence: KPresence.() -> Unit) {
 
 fun <T : GenericEvent> JDA.fireEvent(event: T) {
     eventManager.handle(event)
+}
+
+suspend fun <T> RestAction<T>.await() = suspendCancellableCoroutine<T> {
+    queue() { re -> it.resume(re) { it.printStackTrace() } }
 }

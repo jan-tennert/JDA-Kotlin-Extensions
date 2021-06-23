@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.hooks.IEventManager
 class KEventManager : IEventManager {
 
     private val listeners = mutableListOf<Any>()
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    internal val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     override fun register(e: Any) {
         if (e is EventListener || e is KEventListener) {
@@ -97,4 +97,11 @@ interface KEventListener {
 
 val JDA.hasKotlinExtensions: Boolean
     get() = eventManager is KEventManager
+
+internal val JDA.eventScope: CoroutineScope
+    get() {
+        if (!hasKotlinExtensions) setupKotlinExtensions()
+        val manager = eventManager as KEventManager
+        return manager.scope
+    }
 

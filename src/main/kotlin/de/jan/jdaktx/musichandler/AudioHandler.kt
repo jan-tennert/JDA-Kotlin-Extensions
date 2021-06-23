@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import net.dv8tion.jda.api.entities.Guild
+import net.dv8tion.jda.api.entities.MessageChannel
 import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.entities.VoiceChannel
 import java.time.Duration
@@ -108,7 +109,12 @@ class AudioHandler {
 val Guild.musicManager: GuildMusicManager
     get() = AudioHandler().getGuildAudioPlayer(this)
 
-fun VoiceChannel.play(url: String) {
+fun VoiceChannel.play(url: String, textChannel: MessageChannel? = null) {
+    textChannel?.let {
+        if (it is TextChannel) {
+            it.guild.musicManager.queueTextChannel = it
+        }
+    }
     val audioHandler = AudioHandler()
     audioHandler.loadAndPlay(this, url)
 }
