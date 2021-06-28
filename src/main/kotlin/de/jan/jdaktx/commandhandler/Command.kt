@@ -121,3 +121,7 @@ class ImplementedCommand {
 fun interface SlashCommandRun {
     suspend fun handle(event: SlashCommandEvent)
 }
+
+fun Command.isTheSameAs(other: net.dv8tion.jda.api.interactions.commands.Command): Boolean {
+    return other.name == name && other.description == description && other.options == getOptions() && other.subcommands == subcommands && other.subcommandGroups == subcommandGroups
+}

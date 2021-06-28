@@ -22,7 +22,12 @@ class KSelectOptions {
         option.init()
         Checks.notNull(option.label, "SelectOption Label")
         Checks.notNull(option.value, "SelectOption Value")
-        options.add(SelectOption(option.label!!, option.value!!, option.description, option.isDefault, option.emoji))
+        options.add(
+            SelectOption.of(option.label!!, option.value!!)
+                .withDescription(option.description)
+                .withDefault(option.isDefault)
+                .withEmoji(option.emoji)
+        )
     }
 
     fun SelectOption.unaryPlus() {
@@ -32,7 +37,12 @@ class KSelectOptions {
     fun KSelectOption.unaryPlus() {
         Checks.notNull(this.label, "SelectOption Label")
         Checks.notNull(this.value, "SelectOption Value")
-        options.add(SelectOption(this.label!!, this.value!!, this.description, this.isDefault, this.emoji))
+        options.add(
+            (SelectOption.of(this.label!!, this.value!!)
+                .withDescription(this.description)
+                .withDefault(this.isDefault)
+                .withEmoji(this.emoji))
+        )
     }
 }
 
@@ -79,7 +89,7 @@ class KSelectionMenu(
 
     override fun toComponent(): Component {
         Checks.notNull(id, "SelectionMenu ID")
-        return SelectionMenu.Builder(id!!)
+        return SelectionMenu.create(id!!)
             .setPlaceholder(placeHolder)
             .addOptions(options)
             .setRequiredRange(range.first, range.second)

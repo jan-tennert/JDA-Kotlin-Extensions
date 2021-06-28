@@ -5,11 +5,16 @@ import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.hooks.EventListener
 import net.dv8tion.jda.api.hooks.IEventManager
+import org.slf4j.LoggerFactory
 
 class KEventManager : IEventManager {
 
     private val listeners = mutableListOf<Any>()
     internal val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+
+    companion object {
+        internal val LOGGER = LoggerFactory.getLogger("JDA-Kotlin-Ext")
+    }
 
     override fun register(e: Any) {
         if (e is EventListener || e is KEventListener) {
