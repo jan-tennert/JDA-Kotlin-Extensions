@@ -101,7 +101,7 @@ fun JDA.createCommandHandler(): CommandHandler {
     return CommandHandler(this)
 }
 
-data class SlashCommandUpdate(val commands: MutableList<Command>, val guild: Guild? = null, val jda: JDA) {
+class SlashCommandUpdate(val commands: MutableList<Command>, val guild: Guild? = null, val jda: JDA) {
 
     suspend fun hasChanged(): Boolean {
         if (guild == null) {
