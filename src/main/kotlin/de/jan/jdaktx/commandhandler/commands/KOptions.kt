@@ -13,7 +13,7 @@ class KOptions {
         description: String = "",
         type: OptionType = OptionType.UNKNOWN,
         required: Boolean = false,
-        option: KOption.() -> Unit
+        option: KOption.() -> Unit = {}
     ) {
         val o = KOption(name, description, type, required)
         o.option()

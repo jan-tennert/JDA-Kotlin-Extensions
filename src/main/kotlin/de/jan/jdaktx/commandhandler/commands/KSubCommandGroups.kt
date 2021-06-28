@@ -6,7 +6,7 @@ class KSubCommandGroups {
 
     internal val commands = mutableListOf<SubcommandGroupData>()
 
-    fun subCommandGroup(name: String = "", description: String = "", cmd: KSubCommandGroup.() -> Unit) {
+    fun subCommandGroup(name: String = "", description: String = "", cmd: KSubCommandGroup.() -> Unit = {}) {
         val subCommand = KSubCommandGroup(name, description)
         subCommand.cmd()
         commands.add(subCommand.build())

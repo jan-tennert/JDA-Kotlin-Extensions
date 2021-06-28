@@ -59,30 +59,37 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
         this.commands.addAll(commands)
         val time = measureTimeMillis {
             runBlocking {
-                launch {
-                    val globalCommands =
-                        SlashCommandUpdate(commands.filter { it.guildID == null }.toMutableList(), jda = jda)
+                val globalCommands =
+                    SlashCommandUpdate(commands.filter { it.guildID == null }.toMutableList(), jda = jda)
+                if (globalCommands.commands.any { it.autoRegister }) {
+                    globalCommands.update()
+                } else {
                     if (globalCommands.hasChanged()) {
                         globalCommands.update()
                         KEventManager.LOGGER.info("Updating ${globalCommands.commands.size} global commands")
                     }
-                    delay(500)
-                    val guildCommands = hashMapOf<Long, SlashCommandUpdate>()
-                    commands.filter { it.guildID != null }.forEach {
-                        if (!guildCommands.containsKey(it.guildID)) {
-                            guildCommands[it.guildID!!] =
-                                SlashCommandUpdate(mutableListOf(it), jda.getGuildById(it.guildID!!), jda)
-                        } else {
-                            guildCommands[it.guildID!!]!!.commands.add(it)
-                        }
+                }
+
+                delay(500)
+                val guildCommands = hashMapOf<Long, SlashCommandUpdate>()
+                commands.filter { it.guildID != null }.forEach {
+                    if (!guildCommands.containsKey(it.guildID)) {
+                        guildCommands[it.guildID!!] =
+                            SlashCommandUpdate(mutableListOf(it), jda.getGuildById(it.guildID!!), jda)
+                    } else {
+                        guildCommands[it.guildID!!]!!.commands.add(it)
                     }
-                    guildCommands.forEach { (id, update) ->
+                }
+                guildCommands.forEach { (id, update) ->
+                    if (update.commands.any { it.autoRegister }) {
+                        update.update()
+                    } else {
                         if (update.hasChanged()) {
                             update.update()
                             KEventManager.LOGGER.info("Updating ${update.commands.size} commands for $id")
                         }
-                        delay(500)
                     }
+                    delay(500)
                 }
             }
         }
