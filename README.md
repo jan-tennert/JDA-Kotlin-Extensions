@@ -15,6 +15,7 @@ package is mainly for me, but you can also contribute.
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
 - Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
+- [Music Manager](https://github.com/jan-tennert/JDA-Kotlin-Extensions#music)
 
 # ToDo
 
@@ -42,7 +43,7 @@ jda.awaitReady()
 commandHandler.registerCommands(testCommand())
 
 class testCommand : Command("hi", "Say hi to the bot") {
-    override fun run(
+    override suspend fun run(
         channel: TextChannel?,
         member: Member?,
         user: User,
@@ -174,29 +175,52 @@ channel.sendMessage()
   }
 ```
 
+### Music
+
+You can really easy play yt videos, twitch streams, soundcloud etc.
+
+```kotlin
+val voiceChannel = ...
+
+voiceChannel.play("https://www.youtube.com/watch?v=dQw4w9WgXcQ") //This is it and you can queue them by just reuse the play method
+
+val guild = ...
+val musicManager = guild.musicManager
+
+//To skip, stop etc use the musicManager above you can just skip like that:
+musicManager.skip()
+```
+
+You can also listen to events
+
+```kotlin
+val jda = ...
+jda.on<AudioTrackPlayEvent>() {
+    //do stuff
+}
+```
+
 ### Await Events
 
 With await events you can wait for events without adding a listener!
 
 ```kotlin
-//to wait for an event you have to be in a suspension function but you can use (or another CoroutineScope)
+//to wait for an event you have to be in a suspension function. If you use my SlashCommands, you should be able to use it without any scope! But if you don't use GlobalScope.launch {}
 
-GlobalScope.launch {
-  val event = jda.awaitEvent<GuildMessageReceivedEvent>() { !it.author.isBot } //Add a predicate 
-  println(event.message.contentRaw)
+val event = jda.awaitEvent<GuildMessageReceivedEvent>() { !it.author.isBot } //Add a predicate 
+println(event.message.contentRaw)
 
-    //Or you can wait for a message directly in a channel
-    val channel = ...
-    val message = channel.awaitMessage() { it.author.id == myUserId }
-    println(message.contentRaw)
+//Or you can wait for a message directly in a channel
+val channel = ...
+val message = channel.awaitMessage() { it.author.id == myUserId }
+println(message.contentRaw)
 
-    //You can also add a timeout, that makes the result nullable
-    val message = channel.awaitMessage(timeout = 2000) { it.author.id == myUserId }
-    if (message != null) {
-        println("Got message!")
-    } else {
-        println("Time is over!")
-    }
+//You can also add a timeout, that makes the result nullable
+val message = channel.awaitMessage(timeout = 2000) { it.author.id == myUserId }
+if (message != null) {
+    println("Got message!")
+} else {
+    println("Time is over!")
 }
 
 ```
