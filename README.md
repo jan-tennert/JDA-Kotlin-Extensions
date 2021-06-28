@@ -26,7 +26,7 @@ package is mainly for me, but you can also contribute.
 
 # Installation
 
-Currently, you can only install this dependency through jitpack: https://jitpack.io/#jan-tennert/JDA-Ktx/
+Currently, you can only install this dependency through jitpack: https://jitpack.io/#jan-tennert/JDA-Kotlin-Extensions/
 
 # Interactions
 
