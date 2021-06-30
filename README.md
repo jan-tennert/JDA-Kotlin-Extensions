@@ -140,7 +140,6 @@ channel.sendMessage(message.build()).queue()
 
 #### Selection Menus
 
-*Only works if you have the access to use them*
 You can add them like the buttons but not in the same row
 
 ```kotlin
@@ -167,7 +166,7 @@ channel.sendMessage()
          }
 
          action {
-           val selectedLanguages = it.component!!.options
+           val selectedLanguages = it.selectedOptions!!
            it.reply("Selected Languages: ${selectedLanguages.joinToString() { v -> v.label }}").queue()
          }
       }
