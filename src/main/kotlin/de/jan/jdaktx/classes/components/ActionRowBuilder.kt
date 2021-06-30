@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.ButtonStyle
 import net.dv8tion.jda.api.interactions.components.Component
 import net.dv8tion.jda.api.requests.restaction.MessageAction
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction
 
 class ActionRowBuilder(private val jda: JDA? = null) {
 
@@ -142,12 +143,7 @@ fun actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): List<
     return row.rows.toList()
 }
 
-fun MessageAction.actionRowBuilder(init: ActionRowBuilder.() -> Unit): MessageAction {
-    val builder = ActionRowBuilder(jda)
-    builder.init()
-    setActionRows(builder.rows)
-    return this
-}
+
 
 fun MessageBuilder.actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() -> Unit): MessageBuilder {
     val builder = ActionRowBuilder(jda)
@@ -156,41 +152,16 @@ fun MessageBuilder.actionRowBuilder(jda: JDA? = null, init: ActionRowBuilder.() 
     return this
 }
 
-fun test() {
-    actionRowBuilder {
-        row {
-            selectionMenu {
-                id = "programming_languages"
-                placeHolder = "Select your favourite Programming Languages"
-                minValues = 1
-                maxValues = 3
-                options {
-                    option {
-                        label = "Java"
-                        isDefault = true
-                        value = "java"
-                    }
-                    option {
-                        label = "Python"
-                        value = "python"
-                    }
-                    option {
-                        label = "Kotlin"
-                        isDefault = true
-                        value = "kotlin"
-                    }
-                    option {
-                        label = "C#"
-                        isDefault = true
-                        value = "csharp"
-                    }
-                }
+fun MessageAction.actionRowBuilder(init: ActionRowBuilder.() -> Unit): MessageAction {
+    val builder = ActionRowBuilder(jda)
+    builder.init()
+    setActionRows(builder.rows)
+    return this
+}
 
-                action {
-                    val selectedLanguages = it.component!!.options
-                    it.reply("Selected Languages: ${selectedLanguages.joinToString() { v -> v.label }}").queue()
-                }
-            }
-        }
-    }
+fun ReplyAction.actionRowBuilder(init: ActionRowBuilder.() -> Unit): ReplyAction {
+    val builder = ActionRowBuilder(jda)
+    builder.init()
+    addActionRows(builder.rows)
+    return this
 }

@@ -6,7 +6,7 @@ import net.dv8tion.jda.internal.utils.Checks
 
 class KSubCommandGroup(var name: String, var description: String) {
 
-    private val commands = mutableListOf<SubcommandData>()
+    internal val commands = mutableListOf<SubcommandData>()
 
     fun subCommands(cmd: KSubCommands.() -> Unit) {
         val subCommand = KSubCommands()

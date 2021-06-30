@@ -10,10 +10,19 @@ class KOption(var name: String, var description: String, var type: OptionType, v
 
     fun addChoice(choice: String, value: Int) = choices.add(choice to value)
 
-    fun choices(choices: KChoice.() -> Unit) {
-        val choice = KChoice()
-        choice.choices()
-        this.choices.addAll(choice.choices)
+    fun addChoices(vararg choices: KChoice): KOption {
+        choices.forEach {
+            this.choices.add(it.name to it.value)
+        }
+        return this
     }
+
+    fun addChoices(choices: Collection<KChoice>): KOption {
+        choices.forEach {
+            this.choices.add(it.name to it.value)
+        }
+        return this
+    }
+
 
 }
