@@ -19,6 +19,7 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent
 import net.dv8tion.jda.api.managers.Presence
 import net.dv8tion.jda.api.requests.RestAction
+import net.dv8tion.jda.api.utils.concurrent.Task
 
 /**
  * Called when a reaction is added to the message
@@ -167,4 +168,8 @@ fun <T : GenericEvent> JDA.fireEvent(event: T) {
 
 suspend fun <T> RestAction<T>.await() = suspendCancellableCoroutine<T> {
     queue() { re -> it.resume(re) { it.printStackTrace() } }
+}
+
+suspend fun <T> Task<T>.await() = suspendCancellableCoroutine<T> {
+    this.onSuccess { re -> it.resume(re) { it.printStackTrace() } }
 }

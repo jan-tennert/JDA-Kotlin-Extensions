@@ -29,7 +29,7 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
                     if (event.member != null) {
                         command.run(
                             if (event.isFromGuild) event.textChannel else null,
-                            event.member,
+                            if (event.isFromGuild) event.member else null,
                             event.user,
                             if (!event.isFromGuild) event.privateChannel else null,
                             event.hook,
@@ -39,7 +39,7 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
                     } else {
                         command.run(
                             if (event.isFromGuild) event.textChannel else null,
-                            event.member,
+                            if (event.isFromGuild) event.member else null,
                             event.user,
                             if (!event.isFromGuild) event.privateChannel else null,
                             event.hook,

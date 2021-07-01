@@ -71,9 +71,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <groupId>com.github.DV8FromTheWorld</groupId>
+            <artifactId>JDA</artifactId>
+            <version>feature~selection-menus-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -105,12 +105,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.3.0_286</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.DV8FromTheWorld</groupId>
-            <artifactId>JDA</artifactId>
-            <version>feature~selection-menus-SNAPSHOT</version>
+            <version>4.3.0_289</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
