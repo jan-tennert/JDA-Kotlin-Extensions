@@ -11,7 +11,7 @@ package is mainly for me, but you can also contribute.
 - Event Manager with Coroutines
 - CommandHandler for SlashCommands
 - Type Safe Builder for [slash commands](https://github.com/jan-tennert/JDA-Kotlin-Extensions#slash-commands)
-  , [actions rows + buttons](https://github.com/jan-tennert/JDA-Kotlin-Extensions#buttons)
+  , [actions rows + buttons](https://github.com/jan-tennert/JDA-Kotlin-Extensions#buttons) [+ selection menus](https://github.com/jan-tennert/JDA-Kotlin-Extensions#selection-menus)
   , [roles, guild channels](https://github.com/jan-tennert/JDA-Kotlin-Extensions#create-roles--guild-channels-in-custom-event-manager)
 - Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
@@ -283,4 +283,14 @@ guild.onMemberJoin {
 
 ```
 
-#### There are much more custom events!
+### Misc
+
+```kotlin
+val channel = ...
+//You can easily await RestActions and Tasks like this: (this has to be in a suspension function or in my slash commands)
+val message = channel.sendMessage("test").await()
+println(message.contentRaw)
+
+//You can easily format a timestamp e.g. in two days:
+channel.sendMessage(Duration.days(2).afterNow(TimeFormat.RELATIVE)).queue()
+```
