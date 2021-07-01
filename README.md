@@ -16,6 +16,7 @@ package is mainly for me, but you can also contribute.
 - Music Handler (documentation to-do)
 - [Await Events](https://github.com/jan-tennert/JDA-Kotlin-Extensions#await-events)
 - [Music Manager](https://github.com/jan-tennert/JDA-Kotlin-Extensions#music)
+- [Some other useful things](https://github.com/jan-tennert/JDA-Kotlin-Extensions#misc)
 
 # ToDo
 
