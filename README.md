@@ -293,5 +293,5 @@ val message = channel.sendMessage("test").await()
 println(message.contentRaw)
 
 //You can easily format a timestamp e.g. in two days:
-channel.sendMessage(Duration.days(2).afterNow(TimeFormat.RELATIVE)).queue()
+channel.sendMessage(Duration.days(2).afterNow(TimeFormat.RELATIVE)).queue() //This would send a timestamp which is in exactly 2 days and it's formatted in RELATIVE
 ```
