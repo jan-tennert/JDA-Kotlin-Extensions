@@ -157,8 +157,7 @@ channel.sendMessage()
        selectionMenu {
          id = "programming_languages"
          placeHolder = "Select your favourite Programming Languages"
-         minValues = 1
-         maxValues = 3
+         range = 1 to 3 //same as setting minValues = 1 and maxValues = 3
          options {
            option(label = "Java", isDefault = true, value = "java")
            option(label = "Python", value = "python")
