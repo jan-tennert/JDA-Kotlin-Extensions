@@ -71,11 +71,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.DV8FromTheWorld</groupId>
-            <artifactId>JDA</artifactId>
-            <version>feature~selection-menus-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20210307</version>
@@ -105,7 +100,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.3.0_289</version>
+            <version>4.3.0_293</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
