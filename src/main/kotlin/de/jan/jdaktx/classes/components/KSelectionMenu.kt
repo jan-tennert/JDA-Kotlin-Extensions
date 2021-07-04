@@ -16,7 +16,7 @@ class KSelectOptions {
         value: String? = null,
         isDefault: Boolean = false,
         emoji: Emoji? = null,
-        init: KSelectOption.() -> Unit
+        init: KSelectOption.() -> Unit = {}
     ) {
         val option = KSelectOption(label, description, value, isDefault, emoji)
         option.init()
@@ -100,14 +100,4 @@ class KSelectionMenu(
         return "KSelectionMenu(id=$id, minValues=$minValues, maxValues=$maxValues, placeHolder=$placeHolder)"
     }
 
-}
-
-fun main() {
-    actionRowBuilder {
-        row {
-            selectionMenu {
-                this.id
-            }
-        }
-    }
 }
