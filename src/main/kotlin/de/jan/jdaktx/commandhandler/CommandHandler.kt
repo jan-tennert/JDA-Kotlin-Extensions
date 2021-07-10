@@ -18,10 +18,6 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
 
     private val commands = mutableListOf<Command>()
 
-    init {
-        jda.addEventListener(this)
-    }
-
     override fun onSlashCommand(event: SlashCommandEvent) {
         for (command in commands) {
             if (event.name == command.name) {
@@ -101,6 +97,10 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
                 ).toDouble()
             } seconds!"
         )
+    }
+
+    fun finish() {
+        jda.addEventListener(this)
     }
 }
 
