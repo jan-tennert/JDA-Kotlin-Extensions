@@ -17,6 +17,7 @@ import kotlin.system.measureTimeMillis
 class CommandHandler(val jda: JDA) {
 
     private val commands = mutableListOf<Command>()
+    private var finished = false
 
     /**
      * Register commands you created using [Command] or the [createSlashCommand] method
@@ -70,6 +71,7 @@ class CommandHandler(val jda: JDA) {
     }
 
     fun finish() {
+        if (finished) return
         jda.on<SlashCommandEvent> { event ->
             for (command in commands) {
                 if (event.name == command.name) {
@@ -99,6 +101,7 @@ class CommandHandler(val jda: JDA) {
                 }
             }
         }
+        finished = true
     }
 }
 
