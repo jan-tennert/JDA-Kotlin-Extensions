@@ -19,6 +19,7 @@ class CommandHandler(val jda: JDA) : ListenerAdapter() {
     private val commands = mutableListOf<Command>()
 
     override fun onSlashCommand(event: SlashCommandEvent) {
+        println("asdasdsa")
         for (command in commands) {
             if (event.name == command.name) {
                 jda.eventScope.launch {

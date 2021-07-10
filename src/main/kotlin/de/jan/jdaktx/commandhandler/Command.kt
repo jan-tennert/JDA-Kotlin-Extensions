@@ -20,8 +20,6 @@ abstract class Command(
     var autoRegister: Boolean = true,
 ) : CommandData(name, description) {
 
-    open fun init() {}
-
     abstract suspend fun run(
         channel: TextChannel?,
         member: Member?,
