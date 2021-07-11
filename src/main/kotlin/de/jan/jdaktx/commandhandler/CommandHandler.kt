@@ -74,7 +74,7 @@ class CommandHandler(val jda: JDA) {
         )
     }
 
-    fun finish() {
+    private fun finish() {
         if (finished) return
         jda.on<SlashCommandEvent> { event ->
             for (command in commands) {
