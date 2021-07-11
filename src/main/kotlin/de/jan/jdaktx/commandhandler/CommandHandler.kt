@@ -19,6 +19,10 @@ class CommandHandler(val jda: JDA) {
     private val commands = mutableListOf<Command>()
     private var finished = false
 
+    init {
+        finish()
+    }
+
     /**
      * Register commands you created using [Command] or the [createSlashCommand] method
      */
