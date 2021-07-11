@@ -10,6 +10,8 @@ import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.interactions.components.ButtonStyle
 import net.dv8tion.jda.api.interactions.components.Component
 import net.dv8tion.jda.api.requests.restaction.MessageAction
+import net.dv8tion.jda.api.requests.restaction.WebhookMessageAction
+import net.dv8tion.jda.api.requests.restaction.WebhookMessageUpdateAction
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction
 
 class ActionRowBuilder(private val jda: JDA? = null) {
@@ -163,5 +165,19 @@ fun ReplyAction.actionRowBuilder(init: ActionRowBuilder.() -> Unit): ReplyAction
     val builder = ActionRowBuilder(jda)
     builder.init()
     addActionRows(builder.rows)
+    return this
+}
+
+fun <T> WebhookMessageAction<T>.actionRowBuilder(init: ActionRowBuilder.() -> Unit): WebhookMessageAction<T> {
+    val builder = ActionRowBuilder(jda)
+    builder.init()
+    addActionRows(builder.rows)
+    return this
+}
+
+fun <T> WebhookMessageUpdateAction<T>.actionRowBuilder(init: ActionRowBuilder.() -> Unit): WebhookMessageUpdateAction<T> {
+    val builder = ActionRowBuilder(jda)
+    builder.init()
+    setActionRows(builder.rows)
     return this
 }
